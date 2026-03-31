@@ -34,13 +34,13 @@ interface PeekMascotProps {
  */
 export function PeekMascot({
   side = 'right',
-  peekPx = 58,
+  peekPx = 95,
   mascotWidth = 160,
   flip = false,
   edgeClass,
 }: PeekMascotProps) {
-  // Image aspect ratio: bach-bluehair.png is approximately 520×460
-  const aspectRatio = 460 / 520;
+  // Image actual size: bach-bluehair.png = 516×386px
+  const aspectRatio = 386 / 516;
   const mascotHeight = Math.round(mascotWidth * aspectRatio);
 
   const defaultEdge =

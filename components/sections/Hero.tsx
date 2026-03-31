@@ -180,7 +180,7 @@ export function Hero() {
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div
         className="absolute bottom-0 left-8 sm:left-16 z-20 pointer-events-none"
-        style={{ height: 72, overflow: 'hidden' }}
+        style={{ height: 100, overflow: 'hidden' }}
       >
         <motion.div
           animate={{ y: [0, -9, 0, -4, 0] }}
@@ -195,7 +195,7 @@ export function Hero() {
             src="/bach-bluehair.png"
             alt="ひょっこりバッハ"
             width={176}
-            height={156}
+            height={132}
             priority
             style={{ display: 'block', mixBlendMode: 'multiply' }}
           />

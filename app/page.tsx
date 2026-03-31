@@ -138,7 +138,7 @@ export default async function HomePage() {
       </section>
 
       {/* ひょっこりバッハ — Features(cream) → Greeting(white) */}
-      <PeekMascot side="right" peekPx={60} mascotWidth={160} />
+      <PeekMascot side="right" peekPx={95} mascotWidth={160} />
 
       {/* ── Greeting ── */}
       <section className="py-24 bg-white relative overflow-hidden">
@@ -192,7 +192,7 @@ export default async function HomePage() {
                     src="/bach-bluehair.png"
                     alt="ひょっこりバッハ"
                     width={140}
-                    height={124}
+                    height={105}
                     style={{ mixBlendMode: 'multiply' }}
                   />
                 </div>
@@ -214,7 +214,7 @@ export default async function HomePage() {
       </section>
 
       {/* ひょっこりバッハ — Greeting(white) → Courses(warm-bg) */}
-      <PeekMascot side="left" peekPx={60} mascotWidth={160} flip />
+      <PeekMascot side="left" peekPx={95} mascotWidth={160} flip />
 
       {/* ── Courses ── */}
       <section className="py-24 bg-warm-bg">
@@ -260,7 +260,7 @@ export default async function HomePage() {
       </section>
 
       {/* ひょっこりバッハ — Courses(warm-bg) → Blog(white) */}
-      {recentPosts.length > 0 && <PeekMascot side="right" peekPx={60} mascotWidth={160} />}
+      {recentPosts.length > 0 && <PeekMascot side="right" peekPx={95} mascotWidth={160} />}
 
       {/* ── Blog ── */}
       {recentPosts.length > 0 && (
@@ -309,7 +309,7 @@ export default async function HomePage() {
       )}
 
       {/* ひょっこりバッハ — Blog/Courses → Access(cream) */}
-      <PeekMascot side="left" peekPx={60} mascotWidth={160} flip />
+      <PeekMascot side="left" peekPx={95} mascotWidth={160} flip />
 
       {/* ── Access ── */}
       <section className="py-24 bg-cream">
@@ -383,7 +383,7 @@ export default async function HomePage() {
       </section>
 
       {/* ひょっこりバッハ — Access(cream) → CTA(teal) */}
-      <PeekMascot side="right" peekPx={60} mascotWidth={160} />
+      <PeekMascot side="right" peekPx={95} mascotWidth={160} />
 
       {/* ── CTA ── */}
       <section className="py-24 bg-gradient-to-br from-teal-dark via-primary to-teal relative overflow-hidden">
@@ -434,7 +434,7 @@ export default async function HomePage() {
               src="/bach-bluehair.png"
               alt="ひょっこりバッハ"
               width={120}
-              height={106}
+              height={90}
               style={{ mixBlendMode: 'screen', opacity: 0.85 }}
             />
           </div>
