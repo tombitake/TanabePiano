@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { BachMascot } from '@/components/ui/BachMascot';
 
 /** Decorative piano keys strip — mirrors the top of the concert program */
 function PianoKeysStrip() {
@@ -175,15 +175,32 @@ export function Hero() {
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Bach mascot — peeking from bottom left
+          Bach mascot — peeking from behind the wave (bottom left)
+          overflow:hidden clips everything below the wave line
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      <div
         className="absolute bottom-0 left-8 sm:left-16 z-20 pointer-events-none"
+        style={{ height: 72, overflow: 'hidden' }}
       >
-        <BachMascot className="w-28 sm:w-36 h-auto" />
-      </motion.div>
+        <motion.div
+          animate={{ y: [0, -9, 0, -4, 0] }}
+          transition={{
+            duration: 4.8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            times: [0, 0.28, 0.55, 0.75, 1],
+          }}
+        >
+          <Image
+            src="/bach-bluehair.png"
+            alt="ひょっこりバッハ"
+            width={176}
+            height={156}
+            priority
+            style={{ display: 'block', mixBlendMode: 'multiply' }}
+          />
+        </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div
