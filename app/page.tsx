@@ -1,6 +1,5 @@
 import { Hero } from '@/components/sections/Hero';
 import { SectionTitle } from '@/components/ui/SectionTitle';
-import { PeekMascot } from '@/components/ui/PeekMascot';
 import Image from 'next/image';
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
@@ -137,9 +136,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ひょっこりバッハ — Features(cream) → Greeting(white) */}
-      <PeekMascot side="right" peekPx={95} mascotWidth={160} />
-
       {/* ── Greeting ── */}
       <section className="py-24 bg-white relative overflow-hidden">
         {/* Decorative teal blob */}
@@ -188,13 +184,15 @@ export default async function HomePage() {
                   ))}
                 </div>
                 <div className="mt-6 flex justify-center">
-                  <Image
-                    src="/bach-bluehair.png"
-                    alt="ひょっこりバッハ"
-                    width={140}
-                    height={105}
-                    style={{ mixBlendMode: 'multiply' }}
-                  />
+                  <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-white/30 shadow-lg">
+                    <Image
+                      src="/IMG-6049_edited_edited_edited.avif"
+                      alt="田辺 いつ美"
+                      width={144}
+                      height={144}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
                 </div>
                 <p className="font-serif text-2xl font-light mt-4">田辺 いつ美</p>
                 <p className="text-white/60 text-xs tracking-widest mt-1">代表講師 / Piano Teacher</p>
@@ -212,9 +210,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ひょっこりバッハ — Greeting(white) → Courses(warm-bg) */}
-      <PeekMascot side="left" peekPx={95} mascotWidth={160} flip />
 
       {/* ── Courses ── */}
       <section className="py-24 bg-warm-bg">
@@ -258,9 +253,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ひょっこりバッハ — Courses(warm-bg) → Blog(white) */}
-      {recentPosts.length > 0 && <PeekMascot side="right" peekPx={95} mascotWidth={160} />}
 
       {/* ── Blog ── */}
       {recentPosts.length > 0 && (
@@ -307,9 +299,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* ひょっこりバッハ — Blog/Courses → Access(cream) */}
-      <PeekMascot side="left" peekPx={95} mascotWidth={160} flip />
 
       {/* ── Access ── */}
       <section className="py-24 bg-cream">
@@ -382,9 +371,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ひょっこりバッハ — Access(cream) → CTA(teal) */}
-      <PeekMascot side="right" peekPx={95} mascotWidth={160} />
-
       {/* ── CTA ── */}
       <section className="py-24 bg-gradient-to-br from-teal-dark via-primary to-teal relative overflow-hidden">
         {/* Piano key deco */}
@@ -428,16 +414,6 @@ export default async function HomePage() {
             </a>
           </div>
 
-          {/* Mascot in CTA — peeking up from bottom */}
-          <div className="mt-12 flex justify-center">
-            <Image
-              src="/bach-bluehair.png"
-              alt="ひょっこりバッハ"
-              width={120}
-              height={90}
-              style={{ mixBlendMode: 'screen', opacity: 0.85 }}
-            />
-          </div>
         </div>
       </section>
     </>
