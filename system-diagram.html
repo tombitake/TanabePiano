@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>TANABEピアノ教室 — System Diagram</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f1117;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 20px 48px;
+    min-height: 100vh;
+    color: #e2e8f0;
+  }
+  h1 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-size: 12px;
+    font-weight: 400;
+    color: #3f4f63;
+    margin-bottom: 36px;
+    letter-spacing: 0.03em;
+  }
+  .wrap { width: 1120px; }
+  svg { width: 100%; overflow: visible; }
+</style>
+</head>
+<body>
+<h1>TANABEピアノ教室 — System Architecture</h1>
+<h2>南流山TANABEピアノ教室 Next.js / Vercel / Supabase 構成図</h2>
+
+<div class="wrap">
+<svg viewBox="0 0 1120 810" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Block gradients -->
+  <linearGradient id="gClaude" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#1e1b4b"/>
+    <stop offset="100%" style="stop-color:#2e2a70"/>
+  </linearGradient>
+  <linearGradient id="gChrome" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#1c1917"/>
+    <stop offset="100%" style="stop-color:#2c2521"/>
+  </linearGradient>
+  <linearGradient id="gLocal" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#0c2340"/>
+    <stop offset="100%" style="stop-color:#0f3460"/>
+  </linearGradient>
+  <linearGradient id="gGithub" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#161b22"/>
+    <stop offset="100%" style="stop-color:#21262d"/>
+  </linearGradient>
+  <linearGradient id="gVercel" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#1a1a1a"/>
+    <stop offset="100%" style="stop-color:#2a2a2a"/>
+  </linearGradient>
+  <linearGradient id="gSupabase" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#012a1a"/>
+    <stop offset="100%" style="stop-color:#013d26"/>
+  </linearGradient>
+
+  <!-- Arrow markers -->
+  <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#60a5fa"/>
+  </marker>
+  <marker id="arr-blue-rev" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+    <path d="M8,0 L8,6 L0,3 z" fill="#60a5fa"/>
+  </marker>
+  <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#34d399"/>
+  </marker>
+  <marker id="arr-green-rev" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+    <path d="M8,0 L8,6 L0,3 z" fill="#34d399"/>
+  </marker>
+  <marker id="arr-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#fb923c"/>
+  </marker>
+  <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#a78bfa"/>
+  </marker>
+  <marker id="arr-slate" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8"/>
+  </marker>
+  <marker id="arr-teal" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#2dd4bf"/>
+  </marker>
+  <marker id="arr-teal-rev" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+    <path d="M8,0 L8,6 L0,3 z" fill="#2dd4bf"/>
+  </marker>
+  <marker id="arr-slate-rev" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+    <path d="M8,0 L8,6 L0,3 z" fill="#94a3b8"/>
+  </marker>
+  <!-- upward-pointing marker for below-block routing -->
+  <marker id="arr-slate-up" markerWidth="8" markerHeight="8" refX="3" refY="1" orient="auto">
+    <path d="M0,8 L3,0 L6,8 z" fill="#94a3b8"/>
+  </marker>
+  <marker id="arr-purple-up" markerWidth="8" markerHeight="8" refX="3" refY="1" orient="auto">
+    <path d="M0,8 L3,0 L6,8 z" fill="#a78bfa"/>
+  </marker>
+</defs>
+
+<!-- Background grid -->
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a2236" stroke-width="0.5"/>
+</pattern>
+<rect width="1120" height="810" fill="url(#grid)" rx="16"/>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  TOP ROW                                                   -->
+<!--  [Claude Code] [Claude in Chrome] [Local MacBook]          -->
+<!--  [Legend]  [Tech Stack]  (right panel)                    -->
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<!-- ── Claude Code (top-left) ── -->
+<rect x="18" y="18" width="222" height="308" rx="13" fill="url(#gClaude)" stroke="#6366f1" stroke-width="1.5"/>
+<rect x="18" y="18" width="222" height="38" rx="13" fill="#4338ca"/>
+<rect x="18" y="42" width="222" height="14" fill="#4338ca"/>
+<text x="129" y="41" text-anchor="middle" font-size="13" font-weight="700" fill="#e0e7ff" letter-spacing="0.04em">Claude Code</text>
+<text x="129" y="55" text-anchor="middle" font-size="9" fill="#a5b4fc">AI-Powered CLI Agent</text>
+
+<circle cx="40" cy="84"  r="4" fill="#818cf8"/><text x="52" y="88"  font-size="11" fill="#c7d2fe">コード生成・編集</text>
+<circle cx="40" cy="108" r="4" fill="#818cf8"/><text x="52" y="112" font-size="11" fill="#c7d2fe">ファイル読み書き (Read/Edit)</text>
+<circle cx="40" cy="132" r="4" fill="#818cf8"/><text x="52" y="136" font-size="11" fill="#c7d2fe">Bash コマンド実行</text>
+<circle cx="40" cy="156" r="4" fill="#818cf8"/><text x="52" y="160" font-size="11" fill="#c7d2fe">Git 操作 (add/commit/push)</text>
+<circle cx="40" cy="180" r="4" fill="#818cf8"/><text x="52" y="184" font-size="11" fill="#c7d2fe">Prisma スキーマ管理</text>
+<circle cx="40" cy="204" r="4" fill="#818cf8"/><text x="52" y="208" font-size="11" fill="#c7d2fe">環境変数 (.env) 設定</text>
+<circle cx="40" cy="228" r="4" fill="#818cf8"/><text x="52" y="232" font-size="11" fill="#c7d2fe">npm / tsx スクリプト実行</text>
+<circle cx="40" cy="252" r="4" fill="#818cf8"/><text x="52" y="256" font-size="11" fill="#c7d2fe">Subagent 起動・管理</text>
+
+<rect x="34" y="288" width="190" height="22" rx="11" fill="#312e81" stroke="#6366f1" stroke-width="1"/>
+<text x="129" y="303" text-anchor="middle" font-size="10" fill="#a5b4fc">Anthropic Claude Sonnet</text>
+
+<!-- ── Claude in Chrome (top-center-left) ── -->
+<rect x="260" y="18" width="212" height="308" rx="13" fill="url(#gChrome)" stroke="#f97316" stroke-width="1.5"/>
+<rect x="260" y="18" width="212" height="38" rx="13" fill="#c2410c"/>
+<rect x="260" y="42" width="212" height="14" fill="#c2410c"/>
+<text x="366" y="41" text-anchor="middle" font-size="13" font-weight="700" fill="#fff7ed" letter-spacing="0.04em">Claude in Chrome</text>
+<text x="366" y="55" text-anchor="middle" font-size="9" fill="#fdba74">Browser Automation Agent</text>
+
+<circle cx="280" cy="84"  r="4" fill="#fb923c"/><text x="292" y="88"  font-size="11" fill="#fed7aa">スクリーンショット取得</text>
+<circle cx="280" cy="108" r="4" fill="#fb923c"/><text x="292" y="112" font-size="11" fill="#fed7aa">クリック / 入力操作</text>
+<circle cx="280" cy="132" r="4" fill="#fb923c"/><text x="292" y="136" font-size="11" fill="#fed7aa">ページ読み取り (DOM)</text>
+<circle cx="280" cy="156" r="4" fill="#fb923c"/><text x="292" y="160" font-size="11" fill="#fed7aa">ナビゲーション</text>
+<circle cx="280" cy="180" r="4" fill="#fb923c"/><text x="292" y="184" font-size="11" fill="#fed7aa">フォーム入力 / 送信確認</text>
+<circle cx="280" cy="204" r="4" fill="#fb923c"/><text x="292" y="208" font-size="11" fill="#fed7aa">ネットワークリクエスト監視</text>
+<circle cx="280" cy="228" r="4" fill="#fb923c"/><text x="292" y="232" font-size="11" fill="#fed7aa">コンソールログ確認</text>
+<circle cx="280" cy="252" r="4" fill="#fb923c"/><text x="292" y="256" font-size="11" fill="#fed7aa">E2E 動作検証</text>
+
+<rect x="276" y="288" width="190" height="22" rx="11" fill="#431407" stroke="#f97316" stroke-width="1"/>
+<text x="371" y="303" text-anchor="middle" font-size="10" fill="#fdba74">MCP Protocol / Chrome Extension</text>
+
+<!-- ── Local MacBook (top-center-right) ── -->
+<rect x="492" y="18" width="244" height="308" rx="13" fill="url(#gLocal)" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="492" y="18" width="244" height="38" rx="13" fill="#1d4ed8"/>
+<rect x="492" y="42" width="244" height="14" fill="#1d4ed8"/>
+<text x="614" y="41" text-anchor="middle" font-size="13" font-weight="700" fill="#eff6ff" letter-spacing="0.04em">Local (MacBook)</text>
+<text x="614" y="55" text-anchor="middle" font-size="9" fill="#93c5fd">Development Environment</text>
+
+<rect x="508" y="68" width="212" height="70" rx="8" fill="#0f2d52" stroke="#2563eb" stroke-width="1"/>
+<text x="614" y="84" text-anchor="middle" font-size="10" font-weight="600" fill="#93c5fd">Next.js 14 App</text>
+<text x="518" y="100" font-size="10" fill="#bfdbfe">• App Router + TypeScript</text>
+<text x="518" y="115" font-size="10" fill="#bfdbfe">• Tailwind CSS (pink #E8739A / teal #74C0BC)</text>
+<text x="518" y="129" font-size="10" fill="#bfdbfe">• Framer Motion / Lucide Icons</text>
+
+<rect x="508" y="148" width="212" height="56" rx="8" fill="#0f2d52" stroke="#2563eb" stroke-width="1"/>
+<text x="614" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="#93c5fd">Auth &amp; API Layer</text>
+<text x="518" y="180" font-size="10" fill="#bfdbfe">• NextAuth.js v4 (JWT Strategy)</text>
+<text x="518" y="195" font-size="10" fill="#bfdbfe">• Prisma ORM v5 (PostgreSQL)</text>
+
+<rect x="508" y="214" width="212" height="56" rx="8" fill="#0f2d52" stroke="#2563eb" stroke-width="1"/>
+<text x="614" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#93c5fd">Role-based Routing</text>
+<text x="518" y="246" font-size="10" fill="#bfdbfe">• TEACHER / STUDENT ロール</text>
+<text x="518" y="261" font-size="10" fill="#bfdbfe">• middleware.ts (route guard)</text>
+
+<rect x="508" y="280" width="212" height="22" rx="11" fill="#172554" stroke="#3b82f6" stroke-width="1"/>
+<text x="614" y="295" text-anchor="middle" font-size="10" fill="#93c5fd">npm run dev  |  localhost:3000</text>
+
+<!-- ── Legend (top-right) ── -->
+<rect x="756" y="18" width="346" height="148" rx="12" fill="#0c1425" stroke="#1e293b" stroke-width="1.2"/>
+<text x="929" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#64748b" letter-spacing="0.08em">LEGEND</text>
+
+<line x1="774" y1="58"  x2="830" y2="58"  stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-blue)" marker-start="url(#arr-blue-rev)"/>
+<text x="840" y="62" font-size="10" fill="#93c5fd">File / Code 操作 (Read ↔ Write)</text>
+
+<line x1="774" y1="80"  x2="800" y2="80"  stroke="#a78bfa" stroke-width="1.8" stroke-dasharray="8,3" marker-end="url(#arr-purple)"/>
+<text x="840" y="84" font-size="10" fill="#c4b5fd">git push (Local → GitHub)</text>
+
+<line x1="774" y1="102" x2="830" y2="102" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arr-slate)"/>
+<text x="840" y="106" font-size="10" fill="#cbd5e1">Webhook → Auto Deploy</text>
+
+<line x1="774" y1="124" x2="830" y2="124" stroke="#34d399" stroke-width="1.8" marker-end="url(#arr-green)" marker-start="url(#arr-green-rev)"/>
+<text x="840" y="128" font-size="10" fill="#6ee7b7">DB 接続 (Session Pooler / TCP)</text>
+
+<line x1="774" y1="146" x2="830" y2="146" stroke="#2dd4bf" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arr-teal)"/>
+<text x="840" y="150" font-size="10" fill="#5eead4">prisma dev 操作 (開発時のみ)</text>
+
+<!-- ── Tech Stack (top-right lower) ── -->
+<rect x="756" y="178" width="346" height="148" rx="12" fill="#0c1425" stroke="#1e293b" stroke-width="1.2"/>
+<text x="929" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#64748b" letter-spacing="0.08em">TECH STACK</text>
+
+<text x="772" y="220" font-size="10" fill="#3b82f6" font-weight="600">▸ Framework</text>
+<text x="860" y="220" font-size="10" fill="#cbd5e1">Next.js 14  (App Router)</text>
+<text x="772" y="238" font-size="10" fill="#3b82f6" font-weight="600">▸ Language</text>
+<text x="860" y="238" font-size="10" fill="#cbd5e1">TypeScript</text>
+<text x="772" y="256" font-size="10" fill="#3b82f6" font-weight="600">▸ Styling</text>
+<text x="860" y="256" font-size="10" fill="#cbd5e1">Tailwind CSS + Framer Motion</text>
+<text x="772" y="274" font-size="10" fill="#3b82f6" font-weight="600">▸ Auth</text>
+<text x="860" y="274" font-size="10" fill="#cbd5e1">NextAuth.js v4  (JWT)</text>
+<text x="772" y="292" font-size="10" fill="#3b82f6" font-weight="600">▸ ORM</text>
+<text x="860" y="292" font-size="10" fill="#cbd5e1">Prisma v5</text>
+<text x="772" y="310" font-size="10" fill="#3b82f6" font-weight="600">▸ Database</text>
+<text x="860" y="310" font-size="10" fill="#cbd5e1">PostgreSQL  (Supabase Free Tier)</text>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  VERTICAL CONNECTOR ARROWS (top blocks → bottom blocks)   -->
+<!--  Each arrow is fully vertical with no block overlap        -->
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<!-- Local MacBook → GitHub
+     Route: Local top-left (492,20) → up above all blocks (y=3) → left along top margin →
+            down left margin (x=6, outside Claude Code block) → into GitHub left side
+     This is the physical git push connection from the local machine to GitHub.        -->
+<path d="M 505,20 L 505,3 L 6,3 L 6,490 L 18,490"
+      stroke="#a78bfa" stroke-width="1.6" fill="none"
+      stroke-dasharray="8,3" marker-end="url(#arr-purple)"/>
+<rect x="22" y="474" width="178" height="18" rx="9" fill="#0c1425"/>
+<text x="111" y="487" text-anchor="middle" font-size="9.5" fill="#c4b5fd">git push  (Local → GitHub)</text>
+
+<!-- Claude in Chrome → Vercel  (orange, center lane x=366) -->
+<line x1="366" y1="326" x2="366" y2="448"
+      stroke="#fb923c" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-orange)"/>
+<rect x="276" y="372" width="180" height="18" rx="9" fill="#0c1425"/>
+<text x="366" y="385" text-anchor="middle" font-size="10" fill="#fdba74">HTTPS / Browser 操作・検証</text>
+
+<!-- Local MacBook → Supabase  (teal dashed, right lane x=614) -->
+<line x1="614" y1="326" x2="614" y2="448"
+      stroke="#2dd4bf" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arr-teal)"/>
+<rect x="522" y="372" width="184" height="18" rx="9" fill="#0c1425"/>
+<text x="614" y="385" text-anchor="middle" font-size="10" fill="#5eead4">prisma db push / seed  (開発時)</text>
+
+<!-- Claude Code ↔ Local MacBook
+     Route: up above Claude in Chrome block (y=9) then across, avoiding all top-row blocks.
+     Claude Code edits files and runs Bash commands on the local machine.              -->
+<path d="M 238,20 L 238,9 L 492,9 L 492,20"
+      stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="6,3" fill="none"
+      marker-end="url(#arr-blue)" marker-start="url(#arr-blue-rev)"/>
+<rect x="285" y="1" width="178" height="16" rx="8" fill="#0c1425" opacity="0.95"/>
+<text x="374" y="13" text-anchor="middle" font-size="9.5" fill="#93c5fd">Read / Write / Bash exec</text>
+
+<!-- Claude Code ↔ Claude in Chrome  (short connector at top) -->
+<line x1="240" y1="56" x2="260" y2="56"
+      stroke="#e879f9" stroke-width="1.5"
+      marker-end="url(#arr-purple)" marker-start="url(#arr-purple)"/>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  BOTTOM ROW                                                -->
+<!--  [GitHub] [Vercel] [Supabase] [End Users]                 -->
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<!-- ── GitHub (bottom-left) ── -->
+<rect x="18" y="448" width="218" height="268" rx="13" fill="url(#gGithub)" stroke="#6e7681" stroke-width="1.5"/>
+<rect x="18" y="448" width="218" height="38" rx="13" fill="#30363d"/>
+<rect x="18" y="472" width="218" height="14" fill="#30363d"/>
+<text x="127" y="471" text-anchor="middle" font-size="13" font-weight="700" fill="#f0f6fc" letter-spacing="0.04em">GitHub</text>
+<text x="127" y="485" text-anchor="middle" font-size="9" fill="#8b949e">Source Control &amp; CI Trigger</text>
+
+<circle cx="38" cy="512" r="4" fill="#8b949e"/><text x="50" y="516" font-size="11" fill="#c9d1d9">tombitake/TanabePiano</text>
+<circle cx="38" cy="536" r="4" fill="#8b949e"/><text x="50" y="540" font-size="11" fill="#c9d1d9">Branch: main</text>
+<circle cx="38" cy="560" r="4" fill="#8b949e"/><text x="50" y="564" font-size="11" fill="#c9d1d9">Push → Webhook 発火</text>
+<circle cx="38" cy="584" r="4" fill="#8b949e"/><text x="50" y="588" font-size="11" fill="#c9d1d9">.gitignore  (.env 除外)</text>
+<circle cx="38" cy="608" r="4" fill="#8b949e"/><text x="50" y="612" font-size="11" fill="#c9d1d9">Pull Request / History</text>
+
+<rect x="34" y="672" width="186" height="22" rx="11" fill="#161b22" stroke="#6e7681" stroke-width="1"/>
+<text x="127" y="687" text-anchor="middle" font-size="10" fill="#8b949e">github.com/tombitake</text>
+
+<!-- ── Vercel (bottom-center-left) ── -->
+<rect x="256" y="448" width="238" height="268" rx="13" fill="url(#gVercel)" stroke="#e2e8f0" stroke-width="1.5"/>
+<rect x="256" y="448" width="238" height="38" rx="13" fill="#111111"/>
+<rect x="256" y="472" width="238" height="14" fill="#111111"/>
+<text x="375" y="471" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="0.04em">Vercel</text>
+<text x="375" y="485" text-anchor="middle" font-size="9" fill="#94a3b8">Hosting &amp; Serverless Runtime</text>
+
+<rect x="272" y="496" width="206" height="90" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+<text x="375" y="513" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">Serverless Functions</text>
+<text x="282" y="529" font-size="10" fill="#94a3b8">• Next.js API Routes</text>
+<text x="282" y="545" font-size="10" fill="#94a3b8">• NextAuth.js  /api/auth/*</text>
+<text x="282" y="561" font-size="10" fill="#94a3b8">• Prisma Client (generated)</text>
+<text x="282" y="577" font-size="10" fill="#94a3b8">• Build: prisma generate + next build</text>
+
+<rect x="272" y="596" width="206" height="56" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+<text x="375" y="612" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">Environment Variables</text>
+<text x="282" y="628" font-size="10" fill="#94a3b8">• DATABASE_URL  (Session Pooler)</text>
+<text x="282" y="644" font-size="10" fill="#94a3b8">• NEXTAUTH_SECRET / NEXTAUTH_URL</text>
+
+<rect x="272" y="662" width="206" height="22" rx="11" fill="#000" stroke="#e2e8f0" stroke-width="1"/>
+<text x="375" y="677" text-anchor="middle" font-size="10" fill="#e2e8f0">tanabe-piano.vercel.app</text>
+
+<!-- ── Supabase (bottom-center-right) ── -->
+<rect x="514" y="448" width="264" height="268" rx="13" fill="url(#gSupabase)" stroke="#3ecf8e" stroke-width="1.5"/>
+<rect x="514" y="448" width="264" height="38" rx="13" fill="#16803c"/>
+<rect x="514" y="472" width="264" height="14" fill="#16803c"/>
+<text x="646" y="471" text-anchor="middle" font-size="13" font-weight="700" fill="#f0fdf4" letter-spacing="0.04em">Supabase</text>
+<text x="646" y="485" text-anchor="middle" font-size="9" fill="#86efac">Managed PostgreSQL Database</text>
+
+<rect x="530" y="496" width="232" height="116" rx="8" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+<text x="646" y="513" text-anchor="middle" font-size="10" font-weight="600" fill="#86efac">PostgreSQL  (Free Tier)</text>
+<text x="540" y="530" font-size="10" fill="#bbf7d0">• Users      id / email / password (bcrypt)</text>
+<text x="540" y="547" font-size="10" fill="#bbf7d0">• Schedules  studentId / date / type</text>
+<text x="540" y="564" font-size="10" fill="#bbf7d0">• BlogPosts  title / content / slug</text>
+<text x="540" y="581" font-size="10" fill="#bbf7d0">• ContactMessages</text>
+<text x="540" y="598" font-size="10" fill="#bbf7d0">• Seed: 1 teacher + 2 students</text>
+
+<rect x="530" y="622" width="232" height="50" rx="8" fill="#052e16" stroke="#15803d" stroke-width="1"/>
+<text x="646" y="638" text-anchor="middle" font-size="10" font-weight="600" fill="#86efac">Session Pooler  (port 5432)</text>
+<text x="540" y="655" font-size="9.5" fill="#86efac">aws-1-ap-northeast-1.pooler.supabase.com</text>
+<text x="540" y="668" font-size="9.5" fill="#4ade80">→ Serverless 対応 (Vercel 必須)</text>
+
+<rect x="530" y="682" width="232" height="22" rx="11" fill="#052e16" stroke="#3ecf8e" stroke-width="1"/>
+<text x="646" y="697" text-anchor="middle" font-size="10" fill="#34d399">ap-northeast-1 (東京リージョン)</text>
+
+<!-- ── End Users (bottom-right) ── -->
+<rect x="798" y="448" width="304" height="268" rx="13" fill="#0c1425" stroke="#334155" stroke-width="1.5"/>
+<rect x="798" y="448" width="304" height="38" rx="13" fill="#1e293b"/>
+<rect x="798" y="472" width="304" height="14" fill="#1e293b"/>
+<text x="950" y="471" text-anchor="middle" font-size="13" font-weight="700" fill="#f1f5f9" letter-spacing="0.04em">End Users</text>
+<text x="950" y="485" text-anchor="middle" font-size="9" fill="#64748b">Piano School Members  (Browser)</text>
+
+<!-- Student -->
+<rect x="814" y="498" width="130" height="118" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+<text x="879" y="520" text-anchor="middle" font-size="20">👩‍🎓</text>
+<text x="879" y="540" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">生徒  (STUDENT)</text>
+<text x="822" y="560" font-size="10" fill="#64748b">• /student  ページ閲覧</text>
+<text x="822" y="577" font-size="10" fill="#64748b">• スケジュール確認</text>
+<text x="822" y="594" font-size="10" fill="#64748b">• 自分のレッスン閲覧</text>
+<text x="822" y="611" font-size="10" fill="#475569">例) hanako@example.com</text>
+
+<!-- Teacher -->
+<rect x="956" y="498" width="130" height="118" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+<text x="1021" y="520" text-anchor="middle" font-size="20">👩‍🏫</text>
+<text x="1021" y="540" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8">先生  (TEACHER)</text>
+<text x="964" y="560" font-size="10" fill="#64748b">• /teacher  管理画面</text>
+<text x="964" y="577" font-size="10" fill="#64748b">• スケジュール追加</text>
+<text x="964" y="594" font-size="10" fill="#64748b">• スケジュール編集</text>
+<text x="964" y="611" font-size="10" fill="#475569">例) teacher@tanabepiano.com</text>
+
+<!-- Login flow note -->
+<rect x="814" y="626" width="272" height="68" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+<text x="950" y="644" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b">ログインフロー</text>
+<text x="822" y="662" font-size="10" fill="#475569">① /login  でメール + パスワード入力</text>
+<text x="822" y="678" font-size="10" fill="#475569">② NextAuth JWT 発行 → role 判定</text>
+<text x="822" y="694" font-size="10" fill="#475569">③ /student  または  /teacher  へリダイレクト</text>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  HORIZONTAL ARROWS IN BOTTOM ROW (clean, no overlaps)     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<!-- GitHub → Vercel  (Webhook / auto deploy) -->
+<line x1="236" y1="556" x2="256" y2="556"
+      stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-slate)"/>
+<rect x="168" y="570" width="120" height="18" rx="9" fill="#0c1425"/>
+<text x="228" y="583" text-anchor="middle" font-size="9.5" fill="#94a3b8">Webhook → Deploy</text>
+
+<!-- Vercel ↔ Supabase  (DB connection) -->
+<line x1="494" y1="580" x2="514" y2="580"
+      stroke="#34d399" stroke-width="2"
+      marker-end="url(#arr-green)" marker-start="url(#arr-green-rev)"/>
+<rect x="404" y="594" width="200" height="18" rx="9" fill="#0c1425"/>
+<text x="504" y="607" text-anchor="middle" font-size="9.5" fill="#6ee7b7">PostgreSQL (Session Pooler)</text>
+
+<!-- End Users → Vercel
+     Route: Exit End Users from left side into the gap between Supabase(right=778)
+            and End Users(left=798) → go down below all bottom blocks (y=730) →
+            go left below Supabase and Vercel → enter Vercel bottom center.
+     This avoids crossing through the Supabase block entirely.                         -->
+<path d="M 798,582 L 788,582 L 788,730 L 375,730"
+      stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,3" fill="none"
+      marker-end="url(#arr-slate-rev)"/>
+<rect x="548" y="733" width="124" height="16" rx="8" fill="#0c1425" opacity="0.95"/>
+<text x="610" y="745" text-anchor="middle" font-size="9.5" fill="#cbd5e1">HTTPS アクセス</text>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  USER label                                                -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<text x="18" y="13" font-size="10" fill="#334155" font-weight="600">👤 USER → instructions</text>
+<line x1="85" y1="10" x2="100" y2="16" stroke="#334155" stroke-width="1.2" marker-end="url(#arr-slate)"/>
+
+</svg>
+</div>
+
+<p style="margin-top:20px; font-size:11px; color:#1e293b; text-align:center;">
+  TANABEピアノ教室 System Diagram — 2026-03-31
+</p>
+</body>
+</html>

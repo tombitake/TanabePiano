@@ -39,7 +39,7 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-sm shadow-sm'
+          ? 'bg-white/96 backdrop-blur-md shadow-sm border-b border-warm-bg'
           : 'bg-transparent'
       )}
     >
@@ -47,11 +47,11 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-dark to-primary flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
               <Music className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">
-              <p className="text-xs text-muted-text font-sans leading-none">南流山</p>
+              <p className="text-[10px] text-muted-text font-sans leading-none tracking-widest">南流山</p>
               <p className="text-base font-serif font-medium text-dark-text leading-tight">
                 TANABEピアノ教室
               </p>
@@ -69,7 +69,7 @@ export function Header() {
                   pathname === link.href
                     ? 'text-primary'
                     : 'text-dark-text',
-                  'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100',
+                  'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary-dark after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100',
                   pathname === link.href && 'after:scale-x-100'
                 )}
               >
