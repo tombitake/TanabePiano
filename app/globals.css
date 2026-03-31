@@ -6,15 +6,15 @@
 
 @layer base {
   :root {
-    --primary: #4AADAD;
-    --primary-dark: #2D8A8A;
-    --teal: #74C0BC;
-    --mustard: #C9A840;
-    --blush: #C9A5A0;
-    --cream: #FAF6F0;
-    --warm-bg: #EFE8DF;
-    --dark-text: #1C2424;
-    --muted-text: #7A8888;
+    --primary:      #F28379;
+    --primary-dark: #D96B61;
+    --amber:        #F2CA80;
+    --mauve:        #A68F86;
+    --blush:        #D9C7C1;
+    --cream:        #F2E7C4;
+    --warm-bg:      #D9C7C1;
+    --dark-text:    #2C1F1C;
+    --muted-text:   #A68F86;
   }
 
   html {
@@ -22,8 +22,8 @@
   }
 
   body {
-    background-color: #FAF6F0;
-    color: #1C2424;
+    background-color: #F2E7C4;
+    color: #2C1F1C;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.7;
   }
@@ -43,12 +43,11 @@
     @apply text-sm tracking-widest text-primary uppercase font-sans;
   }
 
-  /* Primary = teal — slightly more refined pill */
+  /* Primary = coral */
   .btn-primary {
     @apply bg-primary text-white px-7 py-2.5 rounded-full text-sm font-medium hover:bg-primary-dark transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 inline-flex items-center gap-2;
   }
 
-  /* Outline = teal border */
   .btn-outline {
     @apply border border-primary text-primary px-7 py-2.5 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-all duration-300 inline-flex items-center gap-2;
   }
@@ -62,40 +61,27 @@
     @apply border border-white/50 text-white/90 px-7 py-2.5 rounded-full text-sm font-medium hover:bg-white/15 transition-all duration-300 inline-flex items-center gap-2;
   }
 
-  .btn-teal {
-    @apply bg-teal text-white px-8 py-3 rounded-full font-medium hover:bg-teal-dark transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 inline-flex items-center gap-2;
-  }
-
-  .btn-mustard {
-    @apply bg-mustard text-white px-8 py-3 rounded-full font-medium hover:bg-mustard-dark transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 inline-flex items-center gap-2;
-  }
-
   .card {
-    @apply bg-white rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden;
-  }
-
-  /* Section with teal background */
-  .section-teal {
-    @apply bg-gradient-teal text-white;
+    @apply bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden;
   }
 }
 
 @layer utilities {
-  .text-gradient-teal {
-    background: linear-gradient(135deg, #2D8A8A, #74C0BC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   .text-gradient-warm {
-    background: linear-gradient(135deg, #C9A840, #4AADAD);
+    background: linear-gradient(135deg, #D96B61, #F2CA80);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Subtle grain texture to mimic print program feel */
+  .text-gradient-blush {
+    background: linear-gradient(135deg, #A68F86, #D9C7C1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle grain texture */
   .grain-overlay::after {
     content: '';
     position: absolute;
@@ -111,37 +97,37 @@ section[id] {
   scroll-margin-top: 80px;
 }
 
-/* Custom scrollbar — teal theme */
+/* Custom scrollbar — coral theme */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAF6F0;
+  background: #F2E7C4;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4AADAD;
+  background: #D9C7C1;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2D8A8A;
+  background: #F28379;
 }
 
 /* Prose styles for blog content */
 .prose-teal h2 {
-  color: #2D8A8A;
+  color: #D96B61;
   font-family: 'Noto Serif JP', serif;
   font-size: 1.5rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #C5E8E8;
+  border-bottom: 1px solid #D9C7C1;
 }
 
 .prose-teal h3 {
-  color: #1E2D2D;
+  color: #2C1F1C;
   font-family: 'Noto Serif JP', serif;
   font-size: 1.25rem;
   margin-top: 1.5rem;
@@ -168,11 +154,11 @@ section[id] {
   content: '♪';
   position: absolute;
   left: 0;
-  color: #4AADAD;
+  color: #F28379;
 }
 
 .prose-teal strong {
-  color: #2D8A8A;
+  color: #D96B61;
   font-weight: 600;
 }
 

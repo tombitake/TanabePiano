@@ -97,7 +97,7 @@ export default function AboutPage() {
     <div className="pt-20">
 
       {/* ── Page header ── */}
-      <div className="relative bg-[#1C3030] py-24 overflow-hidden">
+      <div className="relative bg-[#2C1F1C] py-24 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[3px] flex pointer-events-none">
           {Array.from({ length: 80 }).map((_, i) => {
             const pos = i % 12;
@@ -182,7 +182,7 @@ export default function AboutPage() {
                         <span className="text-5xl mb-3">🎹</span>
                       </div>
                     )}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1C3030]/80 to-transparent p-5">
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#2C1F1C]/80 to-transparent p-5">
                       <p className="font-serif text-xl font-light text-white">{teacher.name}</p>
                       <p className="text-white/50 text-xs tracking-widest mt-0.5">{teacher.kana}</p>
                     </div>
@@ -233,7 +233,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── YouTube & CTA ── */}
-      <section className="py-20 bg-[#1C3030] relative overflow-hidden">
+      <section className="py-20 bg-[#2C1F1C] relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[2px] flex pointer-events-none">
           {Array.from({ length: 80 }).map((_, i) => {
             const pos = i % 12;

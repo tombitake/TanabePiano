@@ -39,7 +39,7 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-white/96 backdrop-blur-md shadow-sm border-b border-warm-bg'
+          ? 'bg-[#FAF6F0]/96 backdrop-blur-md shadow-sm border-b border-blush'
           : 'bg-transparent'
       )}
     >
@@ -47,7 +47,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-dark to-primary flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-dark to-primary flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
               <Music className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">

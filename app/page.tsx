@@ -176,7 +176,7 @@ export default async function HomePage() {
 
             {/* Teacher photo card */}
             <div className="relative flex justify-center">
-              <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-xl bg-[#1C3030]">
+              <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-xl bg-[#2C1F1C]">
                 {/* Photo */}
                 <div className="relative h-72 w-full overflow-hidden">
                   <Image
@@ -185,7 +185,7 @@ export default async function HomePage() {
                     fill
                     className="object-cover object-top"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C3030] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1F1C] via-transparent to-transparent" />
                 </div>
                 {/* Info overlay */}
                 <div className="px-7 pb-7 -mt-6 relative">
@@ -219,7 +219,7 @@ export default async function HomePage() {
               <div
                 key={course.name}
                 className="rounded-2xl bg-white p-6 hover:shadow-md transition-all duration-300 hover:-translate-y-1 border-t-4"
-                style={{ borderTopColor: course.accent.includes('E8') ? '#4AADAD' : '#C9A840' }}
+                style={{ borderTopColor: course.accent.includes('E8') ? '#F28379' : '#F2CA80' }}
               >
                 <div className="text-3xl mb-3">{course.icon}</div>
                 <h3 className="font-serif text-sm font-medium text-dark-text mb-3">{course.name}</h3>
@@ -265,7 +265,7 @@ export default async function HomePage() {
                   href={`/blog/${post.slug}`}
                   className="group bg-cream rounded-2xl overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-warm-bg"
                 >
-                  <div className="h-44 bg-gradient-to-br from-primary to-teal-dark flex items-center justify-center relative overflow-hidden">
+                  <div className="h-44 bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 flex gap-1 opacity-20">
                       {Array.from({ length: 10 }).map((_, i) => (
                         <div key={i} className="flex-1 bg-white rounded-b-md h-20 self-end" />
@@ -367,7 +367,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-24 bg-gradient-to-br from-teal-dark via-primary to-teal relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-[#2C1F1C] via-primary to-mustard relative overflow-hidden">
         {/* Piano key deco */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 flex gap-1 opacity-10 pointer-events-none">
           {Array.from({ length: 20 }).map((_, i) => (

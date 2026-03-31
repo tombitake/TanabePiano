@@ -9,46 +9,50 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Teal is now the PRIMARY brand color (inspired by concert program)
+        // ─── New Feminine Palette ───────────────────────
+        // #F28379 coral/salmon  → primary brand colour
         primary: {
-          DEFAULT: '#4AADAD',
-          light: '#C5E8E8',
-          dark: '#2D8A8A',
+          DEFAULT: '#F28379',
+          light: '#FDF0EF',
+          dark: '#D96B61',
         },
+        // #A68F86 muted mauve   → replaces teal as the mid-tone
         teal: {
-          DEFAULT: '#74C0BC',
-          light: '#E0F5F3',
-          dark: '#3E9090',
+          DEFAULT: '#A68F86',
+          light: '#EDE5E2',
+          dark: '#7D6960',
         },
-        // Mustard/gold accent (botanical illustration)
+        // #F2CA80 warm amber    → replaces mustard
         mustard: {
-          DEFAULT: '#C9A840',
-          light: '#F3E6A8',
-          dark: '#9E8030',
+          DEFAULT: '#F2CA80',
+          light: '#FDF5E4',
+          dark: '#D4A845',
         },
-        // Pink as secondary accent
+        // #D9C7C1 dusty rose    → blush accent / section bg
+        blush: {
+          DEFAULT: '#D9C7C1',
+          light: '#F5EFED',
+          dark: '#B8A09A',
+        },
+        // kept for occasional use
         rose: {
           DEFAULT: '#E8739A',
           light: '#FDE8F0',
           dark: '#C25A80',
         },
-        blush: {
-          DEFAULT: '#C9A5A0',
-          light: '#F5EDEB',
-          dark: '#A88580',
-        },
-        cream: '#FAF6F0',
-        'warm-bg': '#EFE8DF',
-        'dark-text': '#1C2424',
-        'muted-text': '#7A8888',
+        // ─── Base neutrals ──────────────────────────────
+        cream: '#F2E7C4',     // #F2E7C4 warm cream  → main bg
+        'warm-bg': '#D9C7C1', // dusty rose sections
+        'dark-text': '#2C1F1C',
+        'muted-text': '#A68F86',
       },
       fontFamily: {
         serif: ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
         sans: ['Noto Sans JP', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-teal': 'linear-gradient(160deg, #3E9090 0%, #4AADAD 40%, #74C0BC 100%)',
-        'gradient-cream': 'linear-gradient(135deg, #F5EDD8 0%, #EDE0C4 100%)',
+        'gradient-warm': 'linear-gradient(160deg, #D96B61 0%, #F28379 45%, #F2CA80 100%)',
+        'gradient-cream': 'linear-gradient(135deg, #F2E7C4 0%, #D9C7C1 100%)',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
