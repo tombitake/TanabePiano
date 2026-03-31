@@ -153,17 +153,17 @@ export default async function HomePage() {
                 ごあいさつ
               </h2>
               <div className="space-y-4 text-muted-text leading-relaxed text-sm">
-                <p>南流山TANABEピアノ教室へようこそ。代表講師の田辺 いつ美です。</p>
                 <p>
-                  「音楽を通して、子どもたちの豊かな心を育てたい」という想いでレッスンをしています。
-                  ピアノを弾くことの楽しさを伝えながら、音楽の基礎もしっかり学べるよう工夫しています。
+                  従来のピアノ教室のイメージは、先生に言われた事を1から10まできちんと守らなくてはいけないというような<em>have to</em>のイメージをお持ちの親御様もいらっしゃるかも知れません。
                 </p>
                 <p>
-                  お子様のペースに合わせた丁寧なレッスンで、
-                  「弾けた！」という喜びをたくさん経験していただきたいと思っています。
+                  勿論それも一理ありますが、生徒さんの意見に耳を傾け自発的に「こうしたら綺麗になる！」「この曲はこうしたい！」と、たくさんの案を<strong className="text-dark-text font-medium">"考える力"</strong>を養って欲しいと願っております。
                 </p>
-                <p className="text-primary-dark font-medium">
-                  まずは体験レッスンへ、お気軽にお越しください。
+                <p>
+                  普段のピアノレッスンにもピアノを演奏するにおいて重要となるソルフェージュを取り入れ、机上の勉強にならないようソルフェージュを楽しく演奏に活かせるようにしているのが特徴です。
+                </p>
+                <p>
+                  ピアノの楽しさをお伝えして生徒さんを通してご家族の日常の中に音楽が色を添え、素敵な日々をおくれるようお手伝いさせていただきたいと思います。
                 </p>
               </div>
               <div className="mt-8">
@@ -174,38 +174,33 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Mascot card */}
+            {/* Teacher photo card */}
             <div className="relative flex justify-center">
-              <div className="w-full max-w-sm rounded-3xl bg-gradient-to-br from-primary to-teal-dark p-8 shadow-xl flex flex-col items-center text-white text-center relative overflow-hidden">
-                {/* subtle piano key deco */}
-                <div className="absolute top-0 left-0 right-0 flex gap-1 justify-center opacity-20">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div key={i} className="w-6 h-12 bg-white rounded-b-md" />
-                  ))}
+              <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-xl bg-[#1C3030]">
+                {/* Photo */}
+                <div className="relative h-72 w-full overflow-hidden">
+                  <Image
+                    src="/IMG-6049_edited_edited_edited.avif"
+                    alt="田辺 いつ美"
+                    fill
+                    className="object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C3030] via-transparent to-transparent" />
                 </div>
-                <div className="mt-6 flex justify-center">
-                  <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-white/30 shadow-lg">
-                    <Image
-                      src="/IMG-6049_edited_edited_edited.avif"
-                      alt="田辺 いつ美"
-                      width={144}
-                      height={144}
-                      className="w-full h-full object-cover object-top"
-                    />
+                {/* Info overlay */}
+                <div className="px-7 pb-7 -mt-6 relative">
+                  <p className="font-serif text-2xl font-light text-white">田辺 いつ美</p>
+                  <p className="text-white/50 text-xs tracking-widest mt-1 mb-4">代表講師 / Piano Teacher</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['提案型レッスン', 'ソルフェージュ', '全年齢対応'].map((tag) => (
+                      <span key={tag} className="bg-white/10 text-white/80 text-xs px-3 py-1 rounded-full border border-white/15">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <p className="font-serif text-2xl font-light mt-4">田辺 いつ美</p>
-                <p className="text-white/60 text-xs tracking-widest mt-1">代表講師 / Piano Teacher</p>
-                <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                  {['丁寧', '楽しい', '温かい'].map((tag) => (
-                    <span key={tag} className="bg-white/20 text-white text-xs px-3 py-1 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full bg-mustard/20 -z-10" />
-              <div className="absolute -top-4 -left-4 w-14 h-14 rounded-full bg-primary/20 -z-10" />
+              <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-full bg-blush/15 -z-10" />
             </div>
           </div>
         </div>
@@ -399,7 +394,7 @@ export default async function HomePage() {
             教室の雰囲気を感じていただけるよう、体験レッスンを行っています。<br />
             お気軽にお問い合わせください。
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
             <Link href="/contact" className="btn-primary-inv">
               体験レッスン申し込みはこちら
               <ChevronRight className="w-4 h-4" />
@@ -408,9 +403,20 @@ export default async function HomePage() {
               href="https://line.me/R/ti/p/@tanabepiano"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#06C755] text-white px-8 py-3 rounded-full font-medium hover:bg-[#05b04d] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 text-sm"
+              className="bg-[#06C755] text-white px-7 py-2.5 rounded-full font-medium hover:bg-[#05b04d] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 text-sm"
             >
               LINEで相談する
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UC_JB3L-y4TXRfSGVS3rPWCg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#FF0000] text-white px-7 py-2.5 rounded-full font-medium hover:bg-[#CC0000] transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 text-sm"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              教室YouTube
             </a>
           </div>
 

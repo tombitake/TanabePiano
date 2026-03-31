@@ -10,10 +10,11 @@
     --primary-dark: #2D8A8A;
     --teal: #74C0BC;
     --mustard: #C9A840;
-    --cream: #F5EDD8;
-    --warm-bg: #EDE0C4;
-    --dark-text: #1E2D2D;
-    --muted-text: #5A7272;
+    --blush: #C9A5A0;
+    --cream: #FAF6F0;
+    --warm-bg: #EFE8DF;
+    --dark-text: #1C2424;
+    --muted-text: #7A8888;
   }
 
   html {
@@ -21,8 +22,8 @@
   }
 
   body {
-    background-color: #F5EDD8;
-    color: #1E2D2D;
+    background-color: #FAF6F0;
+    color: #1C2424;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.7;
   }
@@ -42,23 +43,23 @@
     @apply text-sm tracking-widest text-primary uppercase font-sans;
   }
 
-  /* Primary = teal */
+  /* Primary = teal — slightly more refined pill */
   .btn-primary {
-    @apply bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 inline-flex items-center gap-2;
+    @apply bg-primary text-white px-7 py-2.5 rounded-full text-sm font-medium hover:bg-primary-dark transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 inline-flex items-center gap-2;
   }
 
   /* Outline = teal border */
   .btn-outline {
-    @apply border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-300 inline-flex items-center gap-2;
+    @apply border border-primary text-primary px-7 py-2.5 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-all duration-300 inline-flex items-center gap-2;
   }
 
-  /* Inverted buttons for teal hero backgrounds */
+  /* Inverted buttons for dark hero backgrounds */
   .btn-primary-inv {
-    @apply bg-white text-primary-dark px-8 py-3 rounded-full font-medium hover:bg-cream transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 inline-flex items-center gap-2 text-sm;
+    @apply bg-white text-primary-dark px-7 py-2.5 rounded-full text-sm font-medium hover:bg-cream transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 inline-flex items-center gap-2;
   }
 
   .btn-outline-inv {
-    @apply border-2 border-white/60 text-white px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all duration-300 inline-flex items-center gap-2 text-sm;
+    @apply border border-white/50 text-white/90 px-7 py-2.5 rounded-full text-sm font-medium hover:bg-white/15 transition-all duration-300 inline-flex items-center gap-2;
   }
 
   .btn-teal {
@@ -116,7 +117,7 @@ section[id] {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5EDD8;
+  background: #FAF6F0;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -5,65 +5,18 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
-/** Decorative piano keys strip — mirrors the top of the concert program */
-function PianoKeysStrip() {
-  // white key indices where a black key appears to the right
-  const blackAfter = new Set([0, 1, 3, 4, 5, 7, 8, 10, 11, 12]);
-  const whites = Array.from({ length: 14 });
-
-  return (
-    <div className="flex gap-[3px] opacity-25 select-none">
-      {whites.map((_, i) => (
-        <div key={i} className="relative">
-          {/* white key */}
-          <div className="w-10 h-28 sm:w-12 sm:h-36 bg-white/80 rounded-b-lg border border-white/40" />
-          {/* black key */}
-          {blackAfter.has(i) && (
-            <div className="absolute top-0 right-0 translate-x-1/2 w-6 sm:w-7 h-16 sm:h-20 bg-gray-900/80 rounded-b-md z-10" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/** Botanical flourish — mustard-coloured branches, echoing the 2025 program cover */
-function BotanicalAccent() {
-  return (
-    <svg
-      viewBox="0 0 120 200"
-      className="w-20 sm:w-28 opacity-60"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {/* main stem */}
-      <path d="M 60,200 Q 55,140 58,80 Q 60,40 62,10" stroke="#C9A840" strokeWidth="3" fill="none" strokeLinecap="round" />
-      {/* branches + buds */}
-      <path d="M 58,150 Q 30,130 18,110" stroke="#C9A840" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <circle cx="18" cy="110" r="8" fill="#C9A840" opacity="0.8" />
-      <path d="M 60,120 Q 90,98 100,82" stroke="#C9A840" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <circle cx="100" cy="82" r="7" fill="#C9A840" opacity="0.8" />
-      <path d="M 59,88 Q 32,70 24,54" stroke="#C9A840" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <circle cx="24" cy="54" r="6.5" fill="#C9A840" opacity="0.8" />
-      <path d="M 61,60 Q 88,44 96,28" stroke="#C9A840" strokeWidth="2" fill="none" strokeLinecap="round" />
-      <circle cx="96" cy="28" r="6" fill="#C9A840" opacity="0.8" />
-      <circle cx="62" cy="10" r="7" fill="#C9A840" opacity="0.9" />
-    </svg>
-  );
-}
-
 export function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden">
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Teal gradient background
+          BACKGROUND: deep ink-teal gradient
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="absolute inset-0 bg-gradient-to-b from-teal-dark via-primary to-[#5BBCBC]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#162424] via-[#1C3030] to-[#223838]" />
 
-      {/* Subtle noise texture (mimics print stock) */}
+      {/* Subtle noise grain */}
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E\")",
@@ -72,61 +25,104 @@ export function Hero() {
       />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Piano keys — top centre (like the program cover)
+          RIGHT PANEL: Piano image — Ken Burns zoom
+          Visible on md+ screens
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="absolute top-14 left-1/2 -translate-x-1/2 flex justify-center overflow-visible pointer-events-none">
-        <PianoKeysStrip />
-      </div>
-
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Botanical accent — bottom right
-      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="absolute bottom-24 right-8 sm:right-16 pointer-events-none">
-        <BotanicalAccent />
-      </div>
-
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Main content
-      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 pb-40 pt-24">
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-xs tracking-[0.35em] text-white/50 uppercase font-sans mb-6 flex items-center gap-3"
+      <div className="absolute right-0 top-0 w-full md:w-[46%] h-full overflow-hidden">
+        <motion.div
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1.0 }}
+          transition={{ duration: 12, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="absolute inset-0"
         >
-          <span className="inline-block w-8 h-px bg-white/30" />
-          Minami-Nagareyama TANABE Piano School
-          <span className="inline-block w-8 h-px bg-white/30" />
+          <Image
+            src="/family-hands-on-piano.png"
+            alt="ピアノを弾く家族の手"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </motion.div>
+        {/* Gradient: blends image into left text area */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1C3030] via-[#1C3030]/60 to-transparent md:via-[#1C3030]/30" />
+        {/* Bottom fade into wave */}
+        <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-[#1C3030] to-transparent" />
+      </div>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          THIN PIANO KEY ACCENT — top left edge
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="absolute top-0 left-0 w-full md:w-[54%] h-[3px] flex overflow-hidden pointer-events-none z-10">
+        {Array.from({ length: 60 }).map((_, i) => {
+          const pos = i % 12;
+          const isBlack = [1, 3, 6, 8, 10].includes(pos);
+          return (
+            <div
+              key={i}
+              className="flex-1 h-full"
+              style={{ background: isBlack ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.22)' }}
+            />
+          );
+        })}
+      </div>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          MAIN CONTENT — left-aligned text block
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="relative z-10 flex flex-col justify-center min-h-screen px-6 sm:px-12 lg:px-20 xl:px-28 pb-40 pt-28 md:w-[58%]">
+
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-[10px] tracking-[0.45em] text-white/35 uppercase font-sans mb-10 flex items-center gap-3"
+        >
+          <span className="w-5 h-px bg-white/25 inline-block" />
+          Minami-Nagareyama · Piano School
         </motion.p>
 
+        {/* Studio name — smaller, refined */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.15 }}
+          transition={{ duration: 0.85, delay: 0.12 }}
         >
-          <p className="font-serif text-sm text-white/70 tracking-wider mb-2">南流山</p>
-          <h1 className="font-serif font-light text-white leading-tight">
-            <span className="block text-6xl sm:text-7xl md:text-8xl tracking-widest">TANABE</span>
-            <span className="block text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] mt-1">ピアノ教室</span>
+          <p className="text-white/35 font-serif text-xs tracking-[0.4em] mb-3 uppercase">南流山</p>
+          <h1 className="font-serif font-light text-white leading-none">
+            <span className="block text-[44px] sm:text-[54px] lg:text-[62px] tracking-[0.12em]">
+              TANABE
+            </span>
+            <span className="block text-[20px] sm:text-[24px] tracking-[0.35em] mt-3 text-white/70">
+              ピアノ教室
+            </span>
           </h1>
         </motion.div>
 
+        {/* Thin rule */}
+        <motion.div
+          initial={{ scaleX: 0, originX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.9, delay: 0.38 }}
+          className="w-14 h-px bg-white/20 my-7"
+        />
+
+        {/* Tagline */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-serif italic text-white/60 text-lg mt-6 mb-10 tracking-wide"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.44 }}
+          className="font-serif italic text-white/45 text-sm sm:text-base tracking-wide mb-10"
         >
           〜 家族と過ごす日常に、音楽を 〜
         </motion.p>
 
+        {/* CTA buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.55 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          transition={{ duration: 0.7, delay: 0.56 }}
+          className="flex flex-col sm:flex-row gap-3"
         >
           <Link href="/contact" className="btn-primary-inv">
             体験レッスン申し込み
@@ -137,12 +133,12 @@ export function Hero() {
           </Link>
         </motion.div>
 
-        {/* Stats row */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.75 }}
-          className="mt-14 flex gap-10 sm:gap-16"
+          transition={{ duration: 0.7, delay: 0.74 }}
+          className="mt-14 pt-8 border-t border-white/10 flex gap-10"
         >
           {[
             { value: '2歳半〜', label: '小さなお子様から' },
@@ -150,17 +146,17 @@ export function Hero() {
             { value: '5コース', label: '充実のラインナップ' },
           ].map((s) => (
             <div key={s.label} className="text-center">
-              <p className="font-serif text-2xl font-light text-white">{s.value}</p>
-              <p className="text-[10px] text-white/50 mt-1 tracking-wider">{s.label}</p>
+              <p className="font-serif text-xl sm:text-2xl font-light text-white">{s.value}</p>
+              <p className="text-[10px] text-white/38 mt-1 tracking-wider">{s.label}</p>
             </div>
           ))}
         </motion.div>
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Wave transition → cream section
+          WAVE transition → cream section
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20">
         <svg
           viewBox="0 0 1440 130"
           xmlns="http://www.w3.org/2000/svg"
@@ -169,17 +165,16 @@ export function Hero() {
         >
           <path
             d="M0,60 C240,120 480,20 720,70 C960,120 1200,30 1440,80 L1440,130 L0,130 Z"
-            fill="#F5EDD8"
+            fill="#FAF6F0"
           />
         </svg>
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Bach mascot — peeking from behind the wave (bottom left)
-          overflow:hidden clips everything below the wave line
+          ひょっこりバッハ — peeking from wave
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div
-        className="absolute bottom-0 left-8 sm:left-16 z-20 pointer-events-none"
+        className="absolute bottom-0 left-8 sm:left-16 z-30 pointer-events-none"
         style={{ height: 122, overflow: 'hidden' }}
       >
         <motion.div
@@ -206,16 +201,16 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-36 right-8 z-10"
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-36 right-6 z-10 hidden md:flex"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="flex flex-col items-center gap-1 text-white/40"
+          transition={{ duration: 1.6, repeat: Infinity }}
+          className="flex flex-col items-center gap-1 text-white/30"
         >
-          <span className="text-[10px] tracking-widest rotate-90">SCROLL</span>
-          <ChevronDown className="w-4 h-4" />
+          <span className="text-[9px] tracking-widest">SCROLL</span>
+          <ChevronDown className="w-3.5 h-3.5" />
         </motion.div>
       </motion.div>
 
