@@ -5,21 +5,17 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
   Calendar,
+  CalendarDays,
   FileText,
   MessageSquare,
   Plus,
   Edit2,
   Trash2,
-  Eye,
-  EyeOff,
   Check,
-  X,
-  ChevronDown,
-  ChevronUp,
   Save,
-  Send,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { MonthCalendar } from '@/components/ui/MonthCalendar';
 
 // ---- Types ----
 interface Schedule {
@@ -59,6 +55,12 @@ interface Student {
   id: string;
   name: string;
   email: string;
+}
+
+interface StudioDay {
+  id: string;
+  date: string;
+  note?: string | null;
 }
 
 // ---- Helpers ----
@@ -367,14 +369,16 @@ function BlogForm({
 export default function TeacherPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'schedules' | 'blog' | 'contacts'>('schedules');
+  const [activeTab, setActiveTab] = useState<'schedules' | 'studio' | 'blog' | 'contacts'>('schedules');
 
   // Data states
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [studioDays, setStudioDays] = useState<StudioDay[]>([]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdatingStudio, setIsUpdatingStudio] = useState(false);
 
   // UI states
   const [showScheduleForm, setShowScheduleForm] = useState(false);
@@ -399,19 +403,17 @@ export default function TeacherPage() {
   const fetchAll = async () => {
     setIsLoading(true);
     try {
-      const [schedulesRes, postsRes, messagesRes, studentsRes] = await Promise.all([
+      const [schedulesRes, postsRes, messagesRes, studioDaysRes] = await Promise.all([
         fetch('/api/schedules'),
         fetch('/api/blog'),
         fetch('/api/contact'),
-        fetch('/api/users/students').catch(() => null),
+        fetch('/api/studio-days'),
       ]);
 
       if (schedulesRes.ok) setSchedules(await schedulesRes.json());
       if (postsRes.ok) setPosts(await postsRes.json());
       if (messagesRes.ok) setMessages(await messagesRes.json());
-
-      // Extract students from schedules as fallback
-      const schedulesData: Schedule[] = schedulesRes.ok ? await schedulesRes.clone().json().catch(() => []) : [];
+      if (studioDaysRes.ok) setStudioDays(await studioDaysRes.json());
     } catch (err) {
       console.error(err);
     } finally {
@@ -460,6 +462,38 @@ export default function TeacherPage() {
     const res = await fetch(`/api/schedules/${id}`, { method: 'DELETE' });
     if (res.ok) {
       setSchedules((prev) => prev.filter((s) => s.id !== id));
+    }
+  };
+
+  // Studio day toggle
+  const handleToggleStudioDay = async (date: string) => {
+    setIsUpdatingStudio(true);
+    try {
+      const existing = studioDays.find((d) => d.date === date);
+      if (existing) {
+        const res = await fetch('/api/studio-days', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ date }),
+        });
+        if (res.ok) {
+          setStudioDays((prev) => prev.filter((d) => d.date !== date));
+        }
+      } else {
+        const res = await fetch('/api/studio-days', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ date }),
+        });
+        if (res.ok) {
+          const day: StudioDay = await res.json();
+          setStudioDays((prev) => [...prev, day]);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsUpdatingStudio(false);
     }
   };
 
@@ -540,7 +574,7 @@ export default function TeacherPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-2">
               <Calendar className="w-5 h-5 text-primary" />
@@ -550,7 +584,19 @@ export default function TeacherPage() {
           </div>
           <div className="bg-white rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-2">
-              <FileText className="w-5 h-5 text-teal" />
+              <CalendarDays className="w-5 h-5 text-primary" />
+              <span className="text-sm text-muted-text">開講日（今月）</span>
+            </div>
+            <p className="text-2xl font-serif font-medium text-dark-text">
+              {studioDays.filter((d) => {
+                const now = new Date();
+                return d.date.startsWith(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`);
+              }).length}
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="w-5 h-5 text-primary" />
               <span className="text-sm text-muted-text">ブログ記事</span>
             </div>
             <p className="text-2xl font-serif font-medium text-dark-text">{posts.length}</p>
@@ -566,9 +612,10 @@ export default function TeacherPage() {
 
         {/* Tabs */}
         <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
-          <div className="flex border-b border-gray-100">
+          <div className="flex border-b border-gray-100 overflow-x-auto">
             {[
-              { key: 'schedules', label: 'スケジュール管理', icon: Calendar },
+              { key: 'schedules', label: 'スケジュール', icon: Calendar },
+              { key: 'studio', label: '開講日管理', icon: CalendarDays },
               { key: 'blog', label: 'ブログ管理', icon: FileText },
               {
                 key: 'contacts',
@@ -580,7 +627,7 @@ export default function TeacherPage() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as typeof activeTab)}
-                className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors relative ${
+                className={`flex items-center gap-2 px-5 py-4 text-sm font-medium transition-colors relative whitespace-nowrap ${
                   activeTab === tab.key
                     ? 'text-primary border-b-2 border-primary'
                     : 'text-muted-text hover:text-dark-text'
@@ -588,7 +635,7 @@ export default function TeacherPage() {
               >
                 <tab.icon className="w-4 h-4" />
                 <span className="hidden sm:inline">{tab.label}</span>
-                {tab.badge ? (
+                {'badge' in tab && tab.badge ? (
                   <span className="bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                     {tab.badge}
                   </span>
@@ -640,14 +687,14 @@ export default function TeacherPage() {
                           <div className="flex items-start gap-3">
                             <div
                               className={`w-3 h-3 rounded-full mt-1.5 shrink-0 ${
-                                schedule.isPublic ? 'bg-teal' : 'bg-primary'
+                                schedule.isPublic ? 'bg-primary' : 'bg-primary'
                               }`}
                             />
                             <div>
                               <p className="font-medium text-dark-text text-sm">
                                 {schedule.title}
                                 {schedule.isPublic && (
-                                  <span className="ml-2 text-xs bg-teal-light text-teal px-2 py-0.5 rounded-full">
+                                  <span className="ml-2 text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full">
                                     公開
                                   </span>
                                 )}
@@ -690,6 +737,60 @@ export default function TeacherPage() {
                     ))
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* ---- Studio Days Tab ---- */}
+            {activeTab === 'studio' && (
+              <div>
+                <div className="mb-6">
+                  <h2 className="font-serif text-xl font-medium text-dark-text mb-1">
+                    開講日管理
+                  </h2>
+                  <p className="text-sm text-muted-text">
+                    カレンダーの日付をクリックして開講日のオン / オフを切り替えられます。
+                    設定した開講日は生徒の画面にも表示されます。
+                  </p>
+                </div>
+
+                <div className="max-w-md">
+                  <MonthCalendar
+                    studioDays={studioDays}
+                    onToggle={handleToggleStudioDay}
+                    isUpdating={isUpdatingStudio}
+                  />
+                </div>
+
+                {/* 開講日リスト（当月） */}
+                {(() => {
+                  const now = new Date();
+                  const prefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+                  const thisMonthDays = studioDays
+                    .filter((d) => d.date.startsWith(prefix))
+                    .sort((a, b) => a.date.localeCompare(b.date));
+
+                  return thisMonthDays.length > 0 ? (
+                    <div className="mt-6">
+                      <h3 className="text-sm font-medium text-muted-text mb-3">
+                        今月の開講日（{thisMonthDays.length}日）
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {thisMonthDays.map((d) => {
+                          const date = new Date(d.date);
+                          const DAYS = ['日', '月', '火', '水', '木', '金', '土'];
+                          return (
+                            <span
+                              key={d.id}
+                              className="inline-flex items-center gap-1.5 bg-primary-light text-primary text-xs px-3 py-1.5 rounded-full border border-primary/20"
+                            >
+                              {date.getMonth() + 1}/{date.getDate()}（{DAYS[date.getDay()]}）
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null;
+                })()}
               </div>
             )}
 
@@ -737,7 +838,7 @@ export default function TeacherPage() {
                               <span
                                 className={`text-xs px-2 py-0.5 rounded-full ${
                                   post.published
-                                    ? 'bg-teal-light text-teal'
+                                    ? 'bg-primary-light text-primary'
                                     : 'bg-gray-100 text-muted-text'
                                 }`}
                               >
@@ -818,7 +919,7 @@ export default function TeacherPage() {
                             className={`shrink-0 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-colors ${
                               msg.read
                                 ? 'bg-gray-100 text-muted-text hover:bg-gray-200'
-                                : 'bg-teal text-white hover:bg-teal-dark'
+                                : 'bg-primary text-white hover:bg-primary-dark'
                             }`}
                           >
                             <Check className="w-3.5 h-3.5" />

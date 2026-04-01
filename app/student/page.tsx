@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Calendar, Clock, BookOpen, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import { formatMonthLabel } from '@/lib/utils';
+import { MonthCalendar } from '@/components/ui/MonthCalendar';
 
 interface Schedule {
   id: string;
@@ -22,6 +23,12 @@ interface Schedule {
   };
 }
 
+interface StudioDay {
+  id: string;
+  date: string;
+  note?: string | null;
+}
+
 type GroupedSchedules = Record<string, Schedule[]>;
 
 function formatScheduleDate(dateStr: string): string {
@@ -34,6 +41,7 @@ export default function StudentPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [studioDays, setStudioDays] = useState<StudioDay[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [expandedMonths, setExpandedMonths] = useState<Record<string, boolean>>({});
@@ -46,16 +54,24 @@ export default function StudentPage() {
 
   useEffect(() => {
     if (session) {
-      fetchSchedules();
+      fetchAll();
     }
   }, [session]);
 
-  const fetchSchedules = async () => {
+  const fetchAll = async () => {
     try {
-      const response = await fetch('/api/schedules');
-      if (!response.ok) throw new Error('スケジュールの取得に失敗しました');
-      const data = await response.json();
-      setSchedules(data);
+      const [schedulesRes, studioDaysRes] = await Promise.all([
+        fetch('/api/schedules'),
+        fetch('/api/studio-days'),
+      ]);
+
+      if (!schedulesRes.ok) throw new Error('スケジュールの取得に失敗しました');
+      const schedulesData: Schedule[] = await schedulesRes.json();
+      setSchedules(schedulesData);
+
+      if (studioDaysRes.ok) {
+        setStudioDays(await studioDaysRes.json());
+      }
 
       // Expand current and next month by default
       const now = new Date();
@@ -126,7 +142,7 @@ export default function StudentPage() {
           </div>
           <div className="bg-white rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-2">
-              <BookOpen className="w-5 h-5 text-teal" />
+              <BookOpen className="w-5 h-5 text-primary" />
               <span className="text-sm text-muted-text">総レッスン数</span>
             </div>
             <p className="text-2xl font-serif font-medium text-dark-text">
@@ -152,128 +168,145 @@ export default function StudentPage() {
           </div>
         )}
 
-        {schedules.length === 0 ? (
-          <div className="bg-white rounded-3xl p-16 text-center">
-            <div className="text-6xl mb-4">📅</div>
-            <p className="text-dark-text font-medium mb-2">スケジュールはありません</p>
-            <p className="text-muted-text text-sm">
-              レッスンスケジュールが登録されると、こちらに表示されます。
-            </p>
+        {/* ── 教室開講日カレンダー ── */}
+        <div className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Calendar className="w-5 h-5 text-primary" />
+            <h2 className="font-serif text-lg font-medium text-dark-text">教室開講日カレンダー</h2>
           </div>
-        ) : (
-          <div className="space-y-4">
-            {sortedMonths.map((month) => {
-              const monthSchedules = groupedSchedules[month];
-              const isExpanded = expandedMonths[month] ?? false;
-              const now = new Date().toISOString().split('T')[0];
-              const hasUpcoming = monthSchedules.some((s) => s.date >= now);
+          <MonthCalendar studioDays={studioDays} />
+        </div>
 
-              return (
-                <div key={month} className="bg-white rounded-3xl overflow-hidden shadow-sm">
-                  <button
-                    onClick={() => toggleMonth(month)}
-                    className="w-full flex items-center justify-between p-5 text-left hover:bg-warm-bg transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-2xl bg-primary-light flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-primary" />
+        {/* ── レッスンスケジュール一覧 ── */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Clock className="w-5 h-5 text-primary" />
+            <h2 className="font-serif text-lg font-medium text-dark-text">レッスンスケジュール</h2>
+          </div>
+
+          {schedules.length === 0 ? (
+            <div className="bg-white rounded-3xl p-16 text-center">
+              <div className="text-6xl mb-4">📅</div>
+              <p className="text-dark-text font-medium mb-2">スケジュールはありません</p>
+              <p className="text-muted-text text-sm">
+                レッスンスケジュールが登録されると、こちらに表示されます。
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {sortedMonths.map((month) => {
+                const monthSchedules = groupedSchedules[month];
+                const isExpanded = expandedMonths[month] ?? false;
+                const now = new Date().toISOString().split('T')[0];
+                const hasUpcoming = monthSchedules.some((s) => s.date >= now);
+
+                return (
+                  <div key={month} className="bg-white rounded-3xl overflow-hidden shadow-sm">
+                    <button
+                      onClick={() => toggleMonth(month)}
+                      className="w-full flex items-center justify-between p-5 text-left hover:bg-warm-bg transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-2xl bg-primary-light flex items-center justify-center">
+                          <Calendar className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <h2 className="font-serif font-medium text-dark-text">
+                            {formatMonthLabel(month)}
+                          </h2>
+                          <p className="text-xs text-muted-text">
+                            {monthSchedules.length}件のスケジュール
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h2 className="font-serif font-medium text-dark-text">
-                          {formatMonthLabel(month)}
-                        </h2>
-                        <p className="text-xs text-muted-text">
-                          {monthSchedules.length}件のスケジュール
-                        </p>
+                      <div className="flex items-center gap-2">
+                        {hasUpcoming && (
+                          <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full font-medium">
+                            予定あり
+                          </span>
+                        )}
+                        {isExpanded ? (
+                          <ChevronUp className="w-5 h-5 text-muted-text" />
+                        ) : (
+                          <ChevronDown className="w-5 h-5 text-muted-text" />
+                        )}
                       </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {hasUpcoming && (
-                        <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full font-medium">
-                          予定あり
-                        </span>
-                      )}
-                      {isExpanded ? (
-                        <ChevronUp className="w-5 h-5 text-muted-text" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5 text-muted-text" />
-                      )}
-                    </div>
-                  </button>
+                    </button>
 
-                  {isExpanded && (
-                    <div className="border-t border-gray-100 divide-y divide-gray-50">
-                      {monthSchedules
-                        .sort((a, b) => {
-                          if (a.date !== b.date) return a.date.localeCompare(b.date);
-                          return a.startTime.localeCompare(b.startTime);
-                        })
-                        .map((schedule) => {
-                          const isPast = schedule.date < now;
-                          const isOwn = schedule.studentId === session.user.id;
+                    {isExpanded && (
+                      <div className="border-t border-gray-100 divide-y divide-gray-50">
+                        {monthSchedules
+                          .sort((a, b) => {
+                            if (a.date !== b.date) return a.date.localeCompare(b.date);
+                            return a.startTime.localeCompare(b.startTime);
+                          })
+                          .map((schedule) => {
+                            const isPast = schedule.date < now;
+                            const isOwn = schedule.studentId === session.user.id;
 
-                          return (
-                            <div
-                              key={schedule.id}
-                              className={`p-5 ${isPast ? 'opacity-60' : ''}`}
-                            >
-                              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                                <div className="flex gap-4">
-                                  <div
-                                    className={`w-3 h-3 rounded-full mt-1.5 shrink-0 ${
-                                      schedule.isPublic
-                                        ? 'bg-teal'
-                                        : isOwn
-                                        ? 'bg-primary'
-                                        : 'bg-gray-300'
-                                    }`}
-                                  />
-                                  <div>
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <h3 className="font-medium text-dark-text text-sm">
-                                        {schedule.title}
-                                      </h3>
-                                      {schedule.isPublic && (
-                                        <span className="text-xs bg-teal-light text-teal px-2 py-0.5 rounded-full">
-                                          公開
-                                        </span>
-                                      )}
-                                      {isOwn && !schedule.isPublic && (
-                                        <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full">
-                                          マイレッスン
-                                        </span>
-                                      )}
-                                    </div>
-                                    <p className="text-sm text-muted-text mb-1">
-                                      {formatScheduleDate(schedule.date)}
-                                    </p>
-                                    <div className="flex items-center gap-1 text-muted-text text-xs">
-                                      <Clock className="w-3.5 h-3.5" />
-                                      {schedule.startTime}〜{schedule.endTime}
-                                    </div>
-                                    {schedule.description && (
-                                      <p className="text-xs text-muted-text mt-1.5 bg-warm-bg rounded-lg px-3 py-1.5">
-                                        {schedule.description}
+                            return (
+                              <div
+                                key={schedule.id}
+                                className={`p-5 ${isPast ? 'opacity-60' : ''}`}
+                              >
+                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                                  <div className="flex gap-4">
+                                    <div
+                                      className={`w-3 h-3 rounded-full mt-1.5 shrink-0 ${
+                                        schedule.isPublic
+                                          ? 'bg-primary'
+                                          : isOwn
+                                          ? 'bg-primary'
+                                          : 'bg-gray-300'
+                                      }`}
+                                    />
+                                    <div>
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <h3 className="font-medium text-dark-text text-sm">
+                                          {schedule.title}
+                                        </h3>
+                                        {schedule.isPublic && (
+                                          <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full">
+                                            公開
+                                          </span>
+                                        )}
+                                        {isOwn && !schedule.isPublic && (
+                                          <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full">
+                                            マイレッスン
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="text-sm text-muted-text mb-1">
+                                        {formatScheduleDate(schedule.date)}
                                       </p>
-                                    )}
+                                      <div className="flex items-center gap-1 text-muted-text text-xs">
+                                        <Clock className="w-3.5 h-3.5" />
+                                        {schedule.startTime}〜{schedule.endTime}
+                                      </div>
+                                      {schedule.description && (
+                                        <p className="text-xs text-muted-text mt-1.5 bg-warm-bg rounded-lg px-3 py-1.5">
+                                          {schedule.description}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
+                                  {isPast && (
+                                    <span className="text-xs text-muted-text bg-gray-100 px-2 py-1 rounded-full h-fit self-start">
+                                      終了
+                                    </span>
+                                  )}
                                 </div>
-                                {isPast && (
-                                  <span className="text-xs text-muted-text bg-gray-100 px-2 py-1 rounded-full h-fit self-start">
-                                    終了
-                                  </span>
-                                )}
                               </div>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
+                            );
+                          })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

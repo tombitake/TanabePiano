@@ -167,8 +167,8 @@ export default function AboutPage() {
                 key={teacher.id}
                 className="grid md:grid-cols-5 gap-10 items-start"
               >
-                {/* Photo column (2/5) — alternates side */}
-                <div className={`md:col-span-2 ${idx % 2 === 1 ? 'md:order-last' : ''}`}>
+                {/* Photo column (1/5) — alternates side */}
+                <div className={`md:col-span-1 ${idx % 2 === 1 ? 'md:order-last' : ''}`}>
                   <div className="relative rounded-2xl overflow-hidden shadow-md bg-warm-bg aspect-[4/5]">
                     {teacher.photo ? (
                       <Image
@@ -192,8 +192,8 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* Text column (3/5) */}
-                <div className={`md:col-span-3 ${idx % 2 === 1 ? 'md:order-first' : ''}`}>
+                {/* Text column (4/5) */}
+                <div className={`md:col-span-4 ${idx % 2 === 1 ? 'md:order-first' : ''}`}>
                   <p className="text-[10px] tracking-[0.4em] text-muted-text uppercase font-sans mb-2 flex items-center gap-2">
                     <span className="w-4 h-px bg-primary/50 inline-block" />
                     {teacher.role}

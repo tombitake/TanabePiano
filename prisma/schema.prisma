@@ -57,3 +57,10 @@ model ContactMessage {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model StudioDay {
+  id        String   @id @default(cuid())
+  date      String   @unique // YYYY-MM-DD
+  note      String?
+  createdAt DateTime @default(now())
+}

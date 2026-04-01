@@ -180,7 +180,7 @@ export default async function HomePage() {
                 {/* Photo — object-contain で全体表示 */}
                 <div className="relative h-72 w-full overflow-hidden bg-[#2C1F1C]">
                   <Image
-                    src="/teacher_itsumi.avif"
+                    src="/IMG-6049_edited_edited_edited.avif"
                     alt="田辺 いつ美"
                     fill
                     className="object-contain"
