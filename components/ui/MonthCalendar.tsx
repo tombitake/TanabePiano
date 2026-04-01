@@ -32,21 +32,12 @@ export function MonthCalendar({ studioDays, onToggle, isUpdating }: MonthCalenda
   const openDateSet = new Set(studioDays.map((d) => d.date));
 
   const prevMonth = () => {
-    if (viewMonth === 0) {
-      setViewYear((y) => y - 1);
-      setViewMonth(11);
-    } else {
-      setViewMonth((m) => m - 1);
-    }
+    if (viewMonth === 0) { setViewYear((y) => y - 1); setViewMonth(11); }
+    else { setViewMonth((m) => m - 1); }
   };
-
   const nextMonth = () => {
-    if (viewMonth === 11) {
-      setViewYear((y) => y + 1);
-      setViewMonth(0);
-    } else {
-      setViewMonth((m) => m + 1);
-    }
+    if (viewMonth === 11) { setViewYear((y) => y + 1); setViewMonth(0); }
+    else { setViewMonth((m) => m + 1); }
   };
 
   const toDateStr = (day: number) =>
@@ -55,6 +46,10 @@ export function MonthCalendar({ studioDays, onToggle, isUpdating }: MonthCalenda
   // 先頭の空セル
   const cells: (number | null)[] = Array(firstDayOfWeek).fill(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+
+  // 今月の開講日数
+  const monthPrefix = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}`;
+  const openCount = studioDays.filter((d) => d.date.startsWith(monthPrefix)).length;
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-warm-bg">
@@ -67,9 +62,14 @@ export function MonthCalendar({ studioDays, onToggle, isUpdating }: MonthCalenda
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
-        <h3 className="font-serif font-medium text-dark-text text-base">
-          {viewYear}年{viewMonth + 1}月
-        </h3>
+        <div className="text-center">
+          <h3 className="font-serif font-medium text-dark-text text-base">
+            {viewYear}年{viewMonth + 1}月
+          </h3>
+          {openCount > 0 && (
+            <p className="text-[10px] text-primary mt-0.5">開講日 {openCount}日</p>
+          )}
+        </div>
         <button
           onClick={nextMonth}
           className="p-1.5 rounded-lg hover:bg-warm-bg transition-colors text-muted-text hover:text-dark-text"
@@ -118,22 +118,12 @@ export function MonthCalendar({ studioDays, onToggle, isUpdating }: MonthCalenda
             if (isOpen) {
               bgCls = 'bg-primary shadow-sm';
             } else if (isToday) {
-              bgCls = 'bg-primary-light ring-1 ring-primary/30';
-            } else {
-              bgCls = '';
+              bgCls = 'ring-2 ring-primary/40 bg-primary/5';
             }
 
             let hoverCls = '';
             if (onToggle) {
-              if (isOpen) {
-                hoverCls = 'hover:bg-primary-dark cursor-pointer';
-              } else if (dow === 0) {
-                hoverCls = 'hover:bg-red-50 cursor-pointer';
-              } else if (dow === 6) {
-                hoverCls = 'hover:bg-blue-50 cursor-pointer';
-              } else {
-                hoverCls = 'hover:bg-warm-bg cursor-pointer';
-              }
+              hoverCls = isOpen ? 'hover:bg-primary-dark cursor-pointer' : 'hover:bg-warm-bg cursor-pointer';
             } else {
               hoverCls = 'cursor-default';
             }
@@ -149,7 +139,11 @@ export function MonthCalendar({ studioDays, onToggle, isUpdating }: MonthCalenda
                   ${textCls} ${bgCls} ${hoverCls}
                   disabled:opacity-60
                 `}
-                title={isOpen ? '開講日（クリックで解除）' : onToggle ? 'クリックで開講日に設定' : ''}
+                title={
+                  isOpen
+                    ? '開講日' + (onToggle ? '（クリックで解除）' : '')
+                    : onToggle ? 'クリックで開講日に設定' : ''
+                }
               >
                 {day}
               </button>
@@ -157,18 +151,43 @@ export function MonthCalendar({ studioDays, onToggle, isUpdating }: MonthCalenda
           })}
         </div>
 
-        {/* ── 凡例 ── */}
-        <div className="flex items-center gap-5 mt-4 pt-3 border-t border-gray-100">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-primary" />
-            <span className="text-[11px] text-muted-text">開講日</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-primary-light ring-1 ring-primary/30" />
-            <span className="text-[11px] text-muted-text">今日</span>
+        {/* ── 凡例 (Legend) ── */}
+        <div className="mt-4 pt-3 border-t border-gray-100">
+          <p className="text-[10px] font-medium text-muted-text mb-2 tracking-wider uppercase">凡例</p>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            {/* 開講日 */}
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-md bg-primary flex-shrink-0 flex items-center justify-center">
+                <span className="text-[9px] text-white font-bold">日</span>
+              </div>
+              <span className="text-[11px] text-dark-text font-medium">開講日</span>
+            </div>
+            {/* 今日 */}
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-md ring-2 ring-primary/40 bg-primary/5 flex-shrink-0 flex items-center justify-center">
+                <span className="text-[9px] text-primary font-bold">日</span>
+              </div>
+              <span className="text-[11px] text-dark-text font-medium">今日</span>
+            </div>
+            {/* 休日（日） */}
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-md bg-red-50 flex-shrink-0 flex items-center justify-center">
+                <span className="text-[9px] text-red-400 font-bold">日</span>
+              </div>
+              <span className="text-[11px] text-muted-text">日曜日</span>
+            </div>
+            {/* 土曜 */}
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-md bg-blue-50 flex-shrink-0 flex items-center justify-center">
+                <span className="text-[9px] text-blue-400 font-bold">日</span>
+              </div>
+              <span className="text-[11px] text-muted-text">土曜日</span>
+            </div>
           </div>
           {onToggle && (
-            <p className="text-[11px] text-muted-text ml-auto">クリックで切り替え</p>
+            <p className="text-[10px] text-muted-text mt-2 pl-1">
+              ✎ 日付をクリックして開講日をオン/オフ
+            </p>
           )}
         </div>
       </div>

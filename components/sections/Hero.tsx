@@ -10,9 +10,9 @@ export function Hero() {
     <section className="relative min-h-screen overflow-hidden">
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          BACKGROUND — warm dark (深みのある暖褐色)
+          BACKGROUND — dark-ui (パレットごとに変化)
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2C1F1C] via-[#3A2826] to-[#2E2220]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-dark-ui via-dark-ui-mid to-dark-ui" />
 
       {/* Subtle grain */}
       <div
@@ -42,16 +42,16 @@ export function Hero() {
             priority
           />
         </motion.div>
-        {/* Blend into left panel */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#3A2826] via-[#3A2826]/50 to-transparent md:via-[#3A2826]/20" />
+        {/* Blend into left panel — dark-ui-mid を参照 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-ui-mid via-dark-ui-mid/50 to-transparent md:via-dark-ui-mid/20" />
         {/* Bottom fade for wave */}
-        <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-[#2E2220] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-dark-ui to-transparent" />
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          Thin warm accent line at top
+          Thin accent line at top
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="absolute top-0 left-0 w-full md:w-[56%] h-[2px] bg-gradient-to-r from-transparent via-[#F28379]/40 to-transparent pointer-events-none z-10" />
+      <div className="absolute top-0 left-0 w-full md:w-[56%] h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none z-10" />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           MAIN TEXT — left-aligned
@@ -86,7 +86,7 @@ export function Hero() {
           </h1>
         </motion.div>
 
-        {/* Thin coral rule */}
+        {/* Thin primary rule */}
         <motion.div
           initial={{ scaleX: 0, originX: 0 }}
           animate={{ scaleX: 1 }}
@@ -141,7 +141,7 @@ export function Hero() {
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          WAVE → cream section
+          WAVE → cream section (SVG fill を CSS var で制御)
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-20">
         <svg
@@ -152,7 +152,7 @@ export function Hero() {
         >
           <path
             d="M0,60 C240,120 480,20 720,70 C960,120 1200,30 1440,80 L1440,130 L0,130 Z"
-            fill="#F2E7C4"
+            fill="rgb(var(--cream))"
           />
         </svg>
       </div>

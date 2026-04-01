@@ -176,16 +176,16 @@ export default async function HomePage() {
 
             {/* Teacher photo card */}
             <div className="relative flex justify-center">
-              <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-xl bg-[#2C1F1C]">
+              <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-xl bg-dark-ui">
                 {/* Photo — object-contain で全体表示 */}
-                <div className="relative h-72 w-full overflow-hidden bg-[#2C1F1C]">
+                <div className="relative h-72 w-full overflow-hidden bg-dark-ui">
                   <Image
                     src="/IMG-6049_edited_edited_edited.avif"
                     alt="田辺 いつ美"
                     fill
                     className="object-contain"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1F1C] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-ui via-transparent to-transparent" />
                 </div>
                 {/* Info overlay */}
                 <div className="px-7 pb-7 -mt-6 relative">
@@ -367,7 +367,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-24 bg-gradient-to-br from-[#2C1F1C] via-primary to-mustard relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-dark-ui via-primary to-mustard relative overflow-hidden">
         {/* Piano key deco */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 flex gap-1 opacity-10 pointer-events-none">
           {Array.from({ length: 20 }).map((_, i) => (

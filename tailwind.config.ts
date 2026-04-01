@@ -1,5 +1,12 @@
 import type { Config } from 'tailwindcss';
 
+/**
+ * Tailwind カラートークンは CSS カスタムプロパティ経由で参照します。
+ * 実際の値は lib/palettes.ts → app/layout.tsx → <style> タグで注入されます。
+ *
+ * rgb(var(--xxx) / <alpha-value>) 形式にすることで
+ * bg-primary/50 のような opacity modifier が使えます。
+ */
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,75 +16,72 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ─── New Feminine Palette ───────────────────────
-        // #F28379 coral/salmon  → primary brand colour
+        // ─── Primary ────────────────────────────────────────
         primary: {
-          DEFAULT: '#F28379',
-          light: '#FDF0EF',
-          dark: '#D96B61',
+          DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
+          light:   'rgb(var(--primary-light) / <alpha-value>)',
+          dark:    'rgb(var(--primary-dark) / <alpha-value>)',
         },
-        // #A68F86 muted mauve   → replaces teal as the mid-tone
+        // ─── Secondary (旧 teal / mauve ポジション) ─────────
         teal: {
-          DEFAULT: '#A68F86',
-          light: '#EDE5E2',
-          dark: '#7D6960',
+          DEFAULT: 'rgb(var(--secondary) / <alpha-value>)',
+          light:   'rgb(var(--secondary-light) / <alpha-value>)',
+          dark:    'rgb(var(--secondary-dark) / <alpha-value>)',
         },
-        // #F2CA80 warm amber    → replaces mustard
+        // ─── Accent (旧 mustard / amber ポジション) ──────────
         mustard: {
-          DEFAULT: '#F2CA80',
-          light: '#FDF5E4',
-          dark: '#D4A845',
+          DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
+          light:   'rgb(var(--accent-light) / <alpha-value>)',
+          dark:    'rgb(var(--accent-dark) / <alpha-value>)',
         },
-        // #D9C7C1 dusty rose    → blush accent / section bg
+        // ─── Blush ───────────────────────────────────────────
         blush: {
-          DEFAULT: '#D9C7C1',
-          light: '#F5EFED',
-          dark: '#B8A09A',
+          DEFAULT: 'rgb(var(--blush) / <alpha-value>)',
+          light:   'rgb(var(--blush) / <alpha-value>)',
+          dark:    'rgb(var(--blush) / <alpha-value>)',
         },
-        // kept for occasional use
-        rose: {
-          DEFAULT: '#E8739A',
-          light: '#FDE8F0',
-          dark: '#C25A80',
-        },
-        // ─── Base neutrals ──────────────────────────────
-        cream: '#F2E7C4',     // #F2E7C4 warm cream  → main bg
-        'warm-bg': '#D9C7C1', // dusty rose sections
-        'dark-text': '#2C1F1C',
-        'muted-text': '#A68F86',
+        // ─── Background neutrals ─────────────────────────────
+        cream:      'rgb(var(--cream) / <alpha-value>)',
+        'warm-bg':  'rgb(var(--warm-bg) / <alpha-value>)',
+        // ─── Text ────────────────────────────────────────────
+        'dark-text':  'rgb(var(--dark-text) / <alpha-value>)',
+        'muted-text': 'rgb(var(--muted-text) / <alpha-value>)',
+        // ─── Dark UI panels (Hero、CTA背景 など) ────────────
+        'dark-ui':     'rgb(var(--dark-ui) / <alpha-value>)',
+        'dark-ui-mid': 'rgb(var(--dark-ui-mid) / <alpha-value>)',
       },
       fontFamily: {
         serif: ['Cormorant Garamond', 'Noto Serif JP', 'serif'],
-        sans: ['Noto Sans JP', 'sans-serif'],
+        sans:  ['Noto Sans JP', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-warm': 'linear-gradient(160deg, #D96B61 0%, #F28379 45%, #F2CA80 100%)',
-        'gradient-cream': 'linear-gradient(135deg, #F2E7C4 0%, #D9C7C1 100%)',
+        'gradient-warm':  'linear-gradient(160deg, rgb(var(--primary-dark)) 0%, rgb(var(--primary)) 45%, rgb(var(--accent)) 100%)',
+        'gradient-cream': 'linear-gradient(135deg, rgb(var(--cream)) 0%, rgb(var(--warm-bg)) 100%)',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'float-delay': 'float 6s ease-in-out 2s infinite',
+        'float':        'float 6s ease-in-out infinite',
+        'float-delay':  'float 6s ease-in-out 2s infinite',
         'float-delay2': 'float 6s ease-in-out 4s infinite',
-        'fade-in': 'fadeIn 0.6s ease-out',
-        'slide-up': 'slideUp 0.6s ease-out',
-        'peek': 'peek 3s ease-in-out infinite',
+        'fade-in':      'fadeIn 0.6s ease-out',
+        'slide-up':     'slideUp 0.6s ease-out',
+        'peek':         'peek 3s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-12px)' },
+          '50%':      { transform: 'translateY(-12px)' },
         },
         fadeIn: {
-          '0%': { opacity: '0' },
+          '0%':   { opacity: '0' },
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '0%':   { opacity: '0', transform: 'translateY(30px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         peek: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-6px)' },
+          '50%':      { transform: 'translateY(-6px)' },
         },
       },
     },
