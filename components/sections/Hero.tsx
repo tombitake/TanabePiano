@@ -157,33 +157,6 @@ export function Hero() {
         </svg>
       </div>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          ひょっこりバッハ — さりげなく波の陰から
-      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div
-        className="absolute bottom-0 left-8 sm:left-16 z-30 pointer-events-none"
-        style={{ height: 110, overflow: 'hidden' }}
-      >
-        <motion.div
-          animate={{ y: [0, -7, 0, -3, 0] }}
-          transition={{
-            duration: 5.5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            times: [0, 0.28, 0.55, 0.75, 1],
-          }}
-        >
-          <Image
-            src="/bach-bluehair.png"
-            alt="ひょっこりバッハ"
-            width={148}
-            height={111}
-            priority
-            style={{ display: 'block', mixBlendMode: 'multiply' }}
-          />
-        </motion.div>
-      </div>
-
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}

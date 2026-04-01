@@ -51,8 +51,8 @@ export function Header() {
               <Music className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">
-              <p className="text-[10px] text-muted-text font-sans leading-none tracking-widest">南流山</p>
-              <p className="text-base font-serif font-medium text-dark-text leading-tight">
+              <p className={cn('text-[10px] font-sans leading-none tracking-widest', isScrolled ? 'text-muted-text' : 'text-white/50')}>南流山</p>
+              <p className={cn('text-base font-serif font-medium leading-tight', isScrolled ? 'text-dark-text' : 'text-white')}>
                 TANABEピアノ教室
               </p>
             </div>
@@ -68,8 +68,8 @@ export function Header() {
                   'text-sm font-medium transition-colors duration-200 hover:text-primary relative py-1',
                   pathname === link.href
                     ? 'text-primary'
-                    : 'text-dark-text',
-                  'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary-dark after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100',
+                    : isScrolled ? 'text-dark-text' : 'text-white/80',
+                  'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100',
                   pathname === link.href && 'after:scale-x-100'
                 )}
               >
@@ -136,7 +136,7 @@ export function Header() {
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden p-2 rounded-lg text-dark-text hover:text-primary transition-colors"
+            className={cn('lg:hidden p-2 rounded-lg hover:text-primary transition-colors', isScrolled ? 'text-dark-text' : 'text-white/80')}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="メニューを開く"
           >

@@ -177,13 +177,13 @@ export default async function HomePage() {
             {/* Teacher photo card */}
             <div className="relative flex justify-center">
               <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-xl bg-[#2C1F1C]">
-                {/* Photo */}
-                <div className="relative h-72 w-full overflow-hidden">
+                {/* Photo — object-contain で全体表示 */}
+                <div className="relative h-72 w-full overflow-hidden bg-[#2C1F1C]">
                   <Image
-                    src="/IMG-6049_edited_edited_edited.avif"
+                    src="/teacher_itsumi.avif"
                     alt="田辺 いつ美"
                     fill
-                    className="object-cover object-top"
+                    className="object-contain"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C1F1C] via-transparent to-transparent" />
                 </div>

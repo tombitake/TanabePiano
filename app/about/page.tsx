@@ -16,7 +16,7 @@ const teachers = [
     name: '田辺 いつ美',
     role: '代表講師',
     days: '駅前教室｜月曜日・火曜日・水曜日',
-    photo: '/IMG-6049_edited_edited_edited.avif',
+    photo: '/teacher_itsumi.avif',
     career: [
       '桐朋学園大学音楽学部ピアノ専攻卒業、同大学研究科（研究生）',
       '卒業演奏会に出演（成績優秀者による演奏会）',
@@ -38,7 +38,7 @@ const teachers = [
     name: '岡本 有珠',
     role: '講師',
     days: '駅前教室｜木曜日　第2教室｜火曜日・水曜日',
-    photo: null,
+    photo: '/teacher_arisu.avif',
     career: [
       '聖徳大学附属女子中学校、高等学校（音楽科）を経て、東京音楽大学ピアノ演奏家コース、同大学大学院音楽研究科卒業',
       '第26回ちば音楽コンクール F部門 第2位',
@@ -57,7 +57,7 @@ const teachers = [
     name: '荒川 知愛',
     role: '講師',
     days: '駅前教室｜金曜日・土曜日・日曜日　第2教室｜木曜日',
-    photo: null,
+    photo: '/teacher_chihiro.avif',
     career: [
       '4歳よりピアノを始める',
       '東京音楽大学付属高等学校を経て、東京音楽大学音楽学部器楽専攻（ピアノ）卒業',
@@ -74,7 +74,7 @@ const teachers = [
     name: '小野里 優香',
     role: '講師',
     days: '第2教室｜金曜日',
-    photo: null,
+    photo: '/teacher_yuuka.avif',
     career: [
       '4歳よりピアノを始める',
       '武蔵野音楽大学演奏学科ピアノ専攻卒業',
@@ -234,6 +234,21 @@ export default function AboutPage() {
 
       {/* ── YouTube & CTA ── */}
       <section className="py-20 bg-[#2C1F1C] relative overflow-hidden">
+        {/* ひょっこりバッハ — さりげなく右隅に */}
+        <div
+          className="absolute bottom-0 right-6 sm:right-10 pointer-events-none opacity-[0.10]"
+          style={{ height: 52, overflow: 'hidden' }}
+        >
+          <Image
+            src="/bach-bluehair.png"
+            alt=""
+            aria-hidden="true"
+            width={100}
+            height={75}
+            style={{ display: 'block' }}
+          />
+        </div>
+
         <div className="absolute top-0 left-0 right-0 h-[2px] flex pointer-events-none">
           {Array.from({ length: 80 }).map((_, i) => {
             const pos = i % 12;
