@@ -5,6 +5,8 @@ import { Footer } from '@/components/layout/Footer';
 import { Providers } from './providers';
 import { getPalette, paletteToStyleString, type PaletteId } from '@/lib/palettes';
 import { PaletteSwitcher } from '@/components/ui/PaletteSwitcher';
+import { Suspense } from 'react';
+import { PaletteInitializer } from '@/components/ui/PaletteInitializer';
 
 export const metadata: Metadata = {
   title: {
@@ -23,14 +25,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // 環境変数でパレットを決定（デフォルト: '1'）
+  // サーバー側のデフォルトパレット（環境変数で制御）
   const paletteId = (process.env.NEXT_PUBLIC_COLOR_PALETTE ?? '1') as PaletteId;
   const palette = getPalette(paletteId);
-
-  // パレットのCSS変数をインライン<style>で注入
   const paletteCSS = paletteToStyleString(palette);
 
-  // パレットスイッチャーを表示するか
+  // 開発中 or プレビューフラグが立っているときだけスイッチャーを表示
   const showSwitcher =
     process.env.NODE_ENV === 'development' ||
     process.env.NEXT_PUBLIC_SHOW_PALETTE_SWITCHER === 'true';
@@ -38,11 +38,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" data-palette={paletteId}>
       <head>
-        {/* パレットCSS変数を最優先で適用 */}
+        {/* サーバー側デフォルトパレットをSSR時に適用（フラッシュ防止） */}
         <style dangerouslySetInnerHTML={{ __html: paletteCSS }} />
       </head>
       <body>
         <Providers>
+          {/* URLパラメータ ?palette=N をクライアント側で読み取り上書き */}
+          <Suspense fallback={null}>
+            <PaletteInitializer serverPaletteId={paletteId} />
+          </Suspense>
           <Header />
           <main>{children}</main>
           <Footer />
